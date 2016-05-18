@@ -1,0 +1,12 @@
+$namespace:                 foundation      !default;
+$zIndexBase:                9999            !default;
+$zIndexAlert:               10000           !default;
+
+
+@mixin transition($time: 0.3s) {
+    -webkit-transition: all $time;
+    transition: all $time;
+}
+
+
+
