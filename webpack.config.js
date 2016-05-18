@@ -1,10 +1,29 @@
 var path = require('path');
 var webpack = require('webpack');
-
-var SRC_PATH = path.resolve(__dirname, './src');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: {
-        index: SRC_PATH + '/index.js'
-    }
-};
+    output: {
+        library: 'foundation',
+        libraryTarget: 'umd'
+    },
+
+    module: {
+        loaders: [
+            {
+                test: /\.js$/, 
+                loader: 'babel'
+            },
+            {
+                test: /\.(scss|css)$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+            }
+        ]
+    },
+
+    plugins: [
+        new ExtractTextPlugin('foundation.css'),
+        new webpack.optimize.OccurenceOrderPlugin(),
+    ]
+}
+

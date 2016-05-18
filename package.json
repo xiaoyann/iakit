@@ -5,7 +5,9 @@
   "main": "dist/foundation.js",
   "scripts": {
     "test": "",
-    "start": "cross-env webpack-dev-server --config examples/webpack.config.js"
+    "start": "cross-env webpack-dev-server --config examples/webpack.config.js",
+    "build-umd": "cross-env webpack src/index.js dist/foundation.js",
+    "build-min": "cross-env webpack -p src/index.js dist/foundation.min.js"
   },
   "author": "xiaoyann",
   "license": "MIT",
@@ -19,6 +21,7 @@
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "express-urlrewrite": "^1.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "node-sass": "^3.7.0",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
