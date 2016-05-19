@@ -5,7 +5,7 @@ import './styles.scss';
 var container = document.createElement('div');
 container.className = NAMESPACE;
 
-var mask = document.createElement('div');
+export var mask = document.createElement('div');
 mask.className = `${NAMESPACE}__mask`;
 
 container.appendChild(mask);

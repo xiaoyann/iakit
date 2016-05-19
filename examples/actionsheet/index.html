@@ -2,9 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Foundation - Alert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Foundation - ActionSheet</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .btn {
+            width: 100%;
+            height: 50px;
+            margin-top: 20px;
+            color: #fff;
+            outline: none;
+            text-align: center;
+            line-height: 50px;
+            background-color: blue;
+        }
+    </style>
 </head>
 <body>
-        
+    
+    <div id="btn1" class="btn">show</div>
+    
+    <!-- <div class="foundation" style="display: block">
+        <div class="foundation__actionsheet">
+            <p class="foundation__actionsheet-title">确定要分手吗？</p>
+            <div>
+                <a class="foundation__actionsheet-btn" href="javascript:;">我再想想</a>
+                <a class="foundation__actionsheet-btn foundation__actionsheet-destructive" href="javascript:;">心意已决</a>
+            </div>
+            <a class="foundation__actionsheet-btn foundation__actionsheet-cancel" href="javascript:;">取消</a>
+        </div>
+        <div class="foundation__mask" style="display: block"></div>
+    </div>        -->
+
+<script src="../fastclick.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<script src="/__build__/lib.js"></script> 
+<script src="/__build__/actionsheet.js"></script> 
 </body>
 </html>

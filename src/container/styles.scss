@@ -19,6 +19,12 @@
     transform: scale(1.1);
 }
 
+// 从底部出来，从底部隐藏
+.#{$namespace}__bottom-enter,
+.#{$namespace}__bottom-leave {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+}
 
 //-----------------------
 // 容器样式设置

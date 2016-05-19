@@ -1,0 +1,63 @@
+@import '../_conf.scss';
+
+.#{$namespace}__actionsheet {
+    display: none;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: $zIndexActionSheet;
+    -webkit-transition: -webkit-transform $duration, transform $duration;
+    transition: -webkit-transform $duration, transform $duration;
+}
+
+.#{$namespace}__actionsheet-title {
+    margin: 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    color: #999;
+    background-color: #fff;
+}
+
+.#{$namespace}__actionsheet-btn {
+    display: block;
+    width: 100%;
+    height: 46px;
+    position: relative;
+    text-align: center;
+    font-size: 16px;
+    text-decoration: none;
+    line-height: 46px;
+    color: #007aff;
+    background-color: #fff;
+}
+
+.#{$namespace}__actionsheet-btn:before {
+    content: " ";
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #ccc;
+    font-size: 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+}
+
+.#{$namespace}__actionsheet-btn:active {
+    background-color: #e4e4e4;
+}
+
+.#{$namespace}__actionsheet-cancel {
+    margin-top: 4px;
+    font-weight: 700;
+}
+
+.#{$namespace}__actionsheet-destructive {
+    color: #ff3b30;
+}
+
+

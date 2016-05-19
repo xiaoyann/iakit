@@ -1,7 +1,8 @@
 import {
     DURATION,
     FADE_ENTER, FADE_LEAVE, 
-    SCALE_ENTER, SCALE_LEAVE
+    SCALE_ENTER, SCALE_LEAVE,
+    BOTTOM_ENTER, BOTTOM_LEAVE
 } from './constant';
 
 
@@ -35,6 +36,21 @@ export function scaleLeave(node, callback) {
     addClass(node, SCALE_LEAVE);
     setTimeout(() => {
         removeClass(node, SCALE_LEAVE);
+        if (callback) callback();
+    }, DURATION);
+}
+
+
+export function bottomEnter(node) {
+    addClass(node, BOTTOM_ENTER);
+    setTimeout(() => removeClass(node, BOTTOM_ENTER));
+}
+
+
+export function bottomLeave(node, callback) {
+    addClass(node, BOTTOM_LEAVE);
+    setTimeout(() => {
+        removeClass(node, BOTTOM_LEAVE);
         if (callback) callback();
     }, DURATION);
 }
