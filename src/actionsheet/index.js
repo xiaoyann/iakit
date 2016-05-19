@@ -13,8 +13,10 @@ const BUTTON_INDEX                  = 'btn-index';
 const CANCEL_INDEX                  = 'cancel';
 
 
+let __SHOWED__ = false;
 // 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
 let buttonHandlers = [];
+
 
 
 var actionsheetElement = document.createElement('div');
@@ -82,16 +84,19 @@ function renderCancel() {
 
 
 function hide() {
+    if (!__SHOWED__) return;
     $container.hideWithMask();
     bottomLeave(actionsheetElement, () => {
         actionsheetElement.style.display = 'none';
         actionsheetElement.innerHTML = '';
         buttonHandlers = [];
+        __SHOWED__ = false;
     });
 }
 
 
 function show() {
+    __SHOWED__ = true;
     actionsheetElement.style.display = 'block';
     $container.showWithMask();
     bottomEnter(actionsheetElement);
