@@ -6,8 +6,9 @@
   "scripts": {
     "test": "",
     "start": "cross-env webpack-dev-server --config examples/webpack.config.js",
-    "build-umd": "cross-env webpack src/index.js dist/foundation.js",
-    "build-min": "cross-env webpack -p src/index.js dist/foundation.min.js"
+    "build": "cross-env webpack src/index.js dist/foundation.js",
+    "build-min": "cross-env webpack -p src/index.js dist/foundation.min.js",
+    "lint": "eslint src"
   },
   "author": "xiaoyann",
   "license": "MIT",
@@ -19,6 +20,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
+    "eslint": "^2.10.2",
     "express": "^4.13.4",
     "express-urlrewrite": "^1.2.0",
     "extract-text-webpack-plugin": "^1.0.1",

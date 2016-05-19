@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     output: {
         library: 'foundation',
-        libraryTarget: 'umd'
+        libraryTarget: 'commonjs'
     },
 
     module: {
@@ -17,6 +17,10 @@ module.exports = {
             {
                 test: /\.(scss|css)$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+            },
+            {
+                test: /\.(?:jpg|gif|png)$/,
+                loader: 'url?limit=8000'
             }
         ]
     },

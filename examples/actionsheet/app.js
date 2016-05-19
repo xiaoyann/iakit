@@ -11,18 +11,18 @@ btn1.onclick = function() {
             {
                 text: '我再想想',
                 onClick: () => {
-                    console.log('想想');
+                    // 是应该好好想想
                 }
             },
             {
-                text: '确认退出',
+                text: '就这样吧',
                 onClick: () => {
-                    console.log('退出');
+                    // 借酒消愁去吧
                 }
             }
         ],
         destructiveIndex: 1,
-        title: '确认要退出登录吗？'
+        title: '确认要分手吗？'
     });
 };
 
