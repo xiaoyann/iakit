@@ -28,13 +28,17 @@ export function hide() {
 
 
 export function showWithMask() {
+    mask.style.display = 'block';
     show();
     fadeEnter(mask);
 }
 
 
 export function hideWithMask() {
-    fadeLeave(mask, hide);
+    fadeLeave(mask, () => {
+        mask.style.display = 'none';
+        hide();
+    });
 }
 
 

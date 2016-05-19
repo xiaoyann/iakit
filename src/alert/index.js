@@ -1,8 +1,6 @@
-import {
-    NAMESPACE, SCALE_ENTER, SCALE_LEAVE
-} from '../constant';
+import {NAMESPACE} from '../constant';
 import {scaleEnter, scaleLeave, getType} from '../func';
-import {append, showWithMask, hideWithMask} from '../container';
+import * as $container from '../container';
 import './styles.scss';
 
 
@@ -10,6 +8,7 @@ const ALERT_TITLE               = `${NAMESPACE}__alert-title`;
 const ALERT_CONTENT             = `${NAMESPACE}__alert-content`;
 const ALERT_BUTTONS             = `${NAMESPACE}__alert-btns`;
 const ALERT_BUTTON              = `${NAMESPACE}__alert-btn`;
+const BUTTONS_SEPARATOR         = `${NAMESPACE}__btns-separator`;
 const BUTTON_INDEX              = 'btn-index';
 
 
@@ -17,15 +16,9 @@ const BUTTON_INDEX              = 'btn-index';
 var buttonHandlers          = [];
 
 
-var alertElement = (function() {
-    let wrapper = document.createElement('div');
-    wrapper.className = `${NAMESPACE}__alert`;
-    let alertMain = document.createElement('div');
-    alertMain.className = `${NAMESPACE}__alert-main`;
-    wrapper.appendChild(alertMain);
-    append(wrapper);
-    return alertMain;
-})();
+let alertElement = document.createElement('div');
+alertElement.className = `${NAMESPACE}__alert`;
+$container.append(alertElement);
 
 
 alertElement.addEventListener('click', (event) => {
@@ -65,7 +58,11 @@ function renderContent(text) {
 function renderButtons(options) {
     let buttons = processOptions(options);
     let wrapper = document.createElement('div');
-    wrapper.className = ALERT_BUTTONS;
+    if (buttons.length === 2) {
+        wrapper.className = ALERT_BUTTONS + ' ' + BUTTONS_SEPARATOR;
+    } else {
+        wrapper.className = ALERT_BUTTONS;
+    }
     buttons.forEach((button, index) => {
         let node = document.createElement('a');
         node.className = ALERT_BUTTON;
@@ -102,14 +99,16 @@ function processOptions(options) {
 
 
 function show() {
-    showWithMask();
+    alertElement.style.display = 'block';
+    $container.showWithMask();
     scaleEnter(alertElement);
 }
 
 
 function hide() {
-    hideWithMask();
+    $container.hideWithMask();
     scaleLeave(alertElement, () => {
+        alertElement.style.display = 'none';
         alertElement.innerHTML = '';
         buttonHandlers = [];
     });
