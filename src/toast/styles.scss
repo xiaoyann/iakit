@@ -1,0 +1,25 @@
+@import '../_conf.scss';
+
+
+.foundation__toast {
+    display: none;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.foundation__toast-main {
+    display: inline-block;
+    max-width: 60%;
+    padding: 12px 15px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 14px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    -webkit-transition: opacity $duration, -webkit-transform $duration, transform $duration;
+    transition: opacity $duration, -webkit-transform $duration, transform $duration;
+}

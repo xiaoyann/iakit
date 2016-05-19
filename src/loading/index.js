@@ -1,15 +1,17 @@
 import {NAMESPACE} from '../constant';
-import {scaleEnter, scaleLeave} from '../func';
 import * as $container from '../container';
-
 import './styles.scss';
+
+
+const LOADING                   = `${NAMESPACE}__loading`;
+const LOADING_INDICATOR         = `${NAMESPACE}__loading-indicator`;
 
 
 var loadingElement = (function() {
     let loading = document.createElement('div');
-    loading.className = `${NAMESPACE}__loading`;
+    loading.className = LOADING;
     let indicator = document.createElement('div');
-    indicator.className = `${NAMESPACE}__loading-indicator`;
+    indicator.className = LOADING_INDICATOR;
     loading.appendChild(indicator);
     $container.append(loading);
     return loading;

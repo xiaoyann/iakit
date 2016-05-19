@@ -4,6 +4,7 @@ import * as $container from '../container';
 import './styles.scss';
 
 
+const ALERT                     = `${NAMESPACE}__alert`;
 const ALERT_TITLE               = `${NAMESPACE}__alert-title`;
 const ALERT_CONTENT             = `${NAMESPACE}__alert-content`;
 const ALERT_BUTTONS             = `${NAMESPACE}__alert-btns`;
@@ -17,7 +18,7 @@ var buttonHandlers          = [];
 
 
 let alertElement = document.createElement('div');
-alertElement.className = `${NAMESPACE}__alert`;
+alertElement.className = ALERT;
 $container.append(alertElement);
 
 

@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Foundation - Alert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Foundation - Toast</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .btn {
+            width: 100%;
+            height: 50px;
+            margin-top: 20px;
+            color: #fff;
+            outline: none;
+            text-align: center;
+            line-height: 50px;
+            background-color: blue;
+        }
+
+    </style>
 </head>
 <body>
-        
+    
+    <div id="btn1" class="btn">show top</div>
+    <div id="btn2" class="btn">show center</div>
+    <div id="btn3" class="btn">show bottom</div>
+    
+    <!-- <div class="foundation" style="display: block">
+        <div class="foundation__toast">
+            <div class="foundation__toast-main">注册成功注册成功</div>
+        </div>
+    </div>        -->
+
+<script src="../fastclick.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+</script>
+<script src="/__build__/lib.js"></script> 
+<script src="/__build__/toast.js"></script> 
 </body>
 </html>
