@@ -3,7 +3,8 @@ $zIndexBase:                9999            !default;
 $zIndexAlert:               10000           !default;
 $zIndexActionSheet:         10000           !default;
 $duration:                  0.3s            !default;
-
+$btnPrimaryColor:           #007AFF         !default;
+$btnDestructiveColor:       #FF3B30         !default;
 
 @mixin transition($time: $duration) {
     -webkit-transition: all $time;

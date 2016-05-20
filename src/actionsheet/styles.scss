@@ -29,7 +29,7 @@
     font-size: 16px;
     text-decoration: none;
     line-height: 46px;
-    color: #007aff;
+    color: $btnPrimaryColor;
     background-color: #fff;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .#{$namespace}__actionsheet-destructive {
-    color: #ff3b30;
+    color: $btnDestructiveColor;
 }
 
 
