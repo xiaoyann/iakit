@@ -1,4 +1,4 @@
-exports["foundation"] =
+module.exports =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -50,23 +50,19 @@ exports["foundation"] =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.ActionSheet = exports.Toast = exports.Loading = exports.Modal = exports.Alert = undefined;
+	exports.ActionSheet = exports.Loading = exports.Toast = exports.Alert = undefined;
 
 	var _alert = __webpack_require__(5);
 
 	var _alert2 = _interopRequireDefault(_alert);
 
-	var _modal = __webpack_require__(7);
+	var _toast = __webpack_require__(7);
 
-	var _modal2 = _interopRequireDefault(_modal);
+	var _Toast = _interopRequireWildcard(_toast);
 
 	var _loading = __webpack_require__(6);
 
 	var _Loading = _interopRequireWildcard(_loading);
-
-	var _toast = __webpack_require__(8);
-
-	var _Toast = _interopRequireWildcard(_toast);
 
 	var _actionsheet = __webpack_require__(4);
 
@@ -76,12 +72,17 @@ exports["foundation"] =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.Alert = _alert2.default; //
+	//
+	// export Alert                from './alert';
+	// export Modal                from './modal';
+	// export * as Loading         from './loading';
+	// export * as Toast           from './toast';
+	// export ActionSheet          from './actionsheet';
 
-	exports.Modal = _modal2.default;
-	exports.Loading = _Loading;
-	exports.Toast = _Toast;
-	exports.ActionSheet = _actionsheet2.default;
+	var Alert = exports.Alert = _alert2.default;
+	var Toast = exports.Toast = _Toast;
+	var Loading = exports.Loading = _Loading;
+	var ActionSheet = exports.ActionSheet = _actionsheet2.default;
 
 /***/ },
 /* 1 */
@@ -125,7 +126,7 @@ exports["foundation"] =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(11);
+	__webpack_require__(10);
 
 	var container = document.createElement('div');
 	container.className = _constant.NAMESPACE;
@@ -290,7 +291,7 @@ exports["foundation"] =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(9);
+	__webpack_require__(8);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -302,6 +303,7 @@ exports["foundation"] =
 	var BUTTON_INDEX = 'btn-index';
 	var CANCEL_INDEX = 'cancel';
 
+	var __SHOWED__ = false;
 	// 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
 	var buttonHandlers = [];
 
@@ -309,7 +311,7 @@ exports["foundation"] =
 	actionsheetElement.className = ACTIONSHEET;
 	$container.append(actionsheetElement);
 
-	document.body.addEventListener('click', function (event) {
+	actionsheetElement.addEventListener('click', function (event) {
 	    var button = event.srcElement;
 	    var index = button.getAttribute(BUTTON_INDEX);
 	    if (index === CANCEL_INDEX) {
@@ -365,15 +367,18 @@ exports["foundation"] =
 	}
 
 	function hide() {
+	    if (!__SHOWED__) return;
 	    $container.hideWithMask();
 	    (0, _func.bottomLeave)(actionsheetElement, function () {
 	        actionsheetElement.style.display = 'none';
 	        actionsheetElement.innerHTML = '';
 	        buttonHandlers = [];
+	        __SHOWED__ = false;
 	    });
 	}
 
 	function show() {
+	    __SHOWED__ = true;
 	    actionsheetElement.style.display = 'block';
 	    $container.showWithMask();
 	    (0, _func.bottomEnter)(actionsheetElement);
@@ -409,7 +414,7 @@ exports["foundation"] =
 
 	var $container = _interopRequireWildcard(_container);
 
-	__webpack_require__(10);
+	__webpack_require__(9);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -424,18 +429,22 @@ exports["foundation"] =
 	// 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
 	var buttonHandlers = [];
 
-	var alertElement = document.createElement('div');
-	alertElement.className = ALERT;
-	$container.append(alertElement);
+	var alertContainer = document.createElement('div');
+	alertContainer.className = ALERT;
+	$container.append(alertContainer);
 
-	alertElement.addEventListener('click', function (event) {
+	var alertElement = document.createElement('div');
+	alertElement.className = _constant.NAMESPACE + '__alert-main';;
+	alertContainer.appendChild(alertElement);
+
+	alertContainer.addEventListener('click', function (event) {
 	    var button = event.srcElement;
 	    var index = button.getAttribute(BUTTON_INDEX);
 	    if (index == null) return;
 	    var handler = buttonHandlers[index];
 	    if (typeof handler === 'function') handler();
 	    hide();
-	});
+	}, false);
 
 	function renderTitle(text) {
 	    if (typeof text === 'string') {
@@ -502,7 +511,7 @@ exports["foundation"] =
 	}
 
 	function show() {
-	    alertElement.style.display = 'block';
+	    alertContainer.style.display = 'block';
 	    $container.showWithMask();
 	    (0, _func.scaleEnter)(alertElement);
 	}
@@ -510,7 +519,7 @@ exports["foundation"] =
 	function hide() {
 	    $container.hideWithMask();
 	    (0, _func.scaleLeave)(alertElement, function () {
-	        alertElement.style.display = 'none';
+	        alertContainer.style.display = 'none';
 	        alertElement.innerHTML = '';
 	        buttonHandlers = [];
 	    });
@@ -534,7 +543,7 @@ exports["foundation"] =
 
 	var $container = _interopRequireWildcard(_container);
 
-	__webpack_require__(12);
+	__webpack_require__(11);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -563,12 +572,6 @@ exports["foundation"] =
 
 /***/ },
 /* 7 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-/***/ },
-/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -588,7 +591,7 @@ exports["foundation"] =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(13);
+	__webpack_require__(12);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -647,6 +650,12 @@ exports["foundation"] =
 	}
 
 /***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
 /* 9 */
 /***/ function(module, exports) {
 
@@ -666,12 +675,6 @@ exports["foundation"] =
 
 /***/ },
 /* 12 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-/* 13 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -5,7 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     output: {
         library: 'foundation',
-        libraryTarget: 'commonjs'
+        libraryTarget: 'commonjs2'
     },
 
     module: {

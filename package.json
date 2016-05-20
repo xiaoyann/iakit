@@ -6,7 +6,7 @@
   "scripts": {
     "test": "",
     "start": "cross-env webpack-dev-server --config examples/webpack.config.js",
-    "build": "cross-env webpack src/index.js dist/foundation.js",
+    "build": "rimraf dist && cross-env webpack src/index.js dist/foundation.js && npm run build-min",
     "build-min": "cross-env webpack -p src/index.js dist/foundation.min.js",
     "lint": "eslint src"
   },
@@ -26,6 +26,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "node-sass": "^3.7.0",
+    "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
