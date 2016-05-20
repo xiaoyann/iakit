@@ -23,7 +23,7 @@ var actionsheetElement = document.createElement('div');
 actionsheetElement.className = ACTIONSHEET;    
 $container.append(actionsheetElement);
 
-document.body.addEventListener('click', (event) => {
+actionsheetElement.addEventListener('click', (event) => {
     let button = event.srcElement;
     let index = button.getAttribute(BUTTON_INDEX);
     if (index === CANCEL_INDEX) {

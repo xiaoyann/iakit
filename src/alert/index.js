@@ -17,19 +17,22 @@ const BUTTON_INDEX              = 'btn-index';
 var buttonHandlers          = [];
 
 
+let alertContainer = document.createElement('div');
+alertContainer.className = ALERT;
+$container.append(alertContainer);
+
 let alertElement = document.createElement('div');
-alertElement.className = ALERT;
-$container.append(alertElement);
+alertElement.className = `${NAMESPACE}__alert-main`;;
+alertContainer.appendChild(alertElement);
 
-
-alertElement.addEventListener('click', (event) => {
+alertContainer.addEventListener('click', (event) => {
     let button = event.srcElement;
     let index = button.getAttribute(BUTTON_INDEX);
     if (index == null) return;
     let handler = buttonHandlers[index];
     if (typeof handler === 'function') handler();
     hide(); 
-});
+}, false);
 
 
 function renderTitle(text) {
@@ -100,7 +103,7 @@ function processOptions(options) {
 
 
 function show() {
-    alertElement.style.display = 'block';
+    alertContainer.style.display = 'block';
     $container.showWithMask();
     scaleEnter(alertElement);
 }
@@ -109,7 +112,7 @@ function show() {
 function hide() {
     $container.hideWithMask();
     scaleLeave(alertElement, () => {
-        alertElement.style.display = 'none';
+        alertContainer.style.display = 'none';
         alertElement.innerHTML = '';
         buttonHandlers = [];
     });

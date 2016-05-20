@@ -3,16 +3,19 @@
 
 .#{$namespace}__alert {
     display: none;
+    position: relative;
+    z-index: $zIndexAlert;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.#{$namespace}__alert-main {
     width: 80%;
-    overflow: hidden;
-    margin-top: -25%;
     margin-left: auto;
     margin-right: auto;
     padding-top: 15px;
     border-radius: 4px;
-    position: relative;
-    top: 50%;
-    z-index: $zIndexAlert;
     background-color: #fff;
     -webkit-transition: opacity $duration, -webkit-transform $duration, transform $duration;
     transition: opacity $duration, -webkit-transform $duration, transform $duration;
