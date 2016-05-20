@@ -1,5 +1,5 @@
 # foundation
-Alert, Toast, Loading, ActionSheet 常用组件封装。没有任何依赖。
+Alert, Toast, Loading, ActionSheet 常用组件封装，没有任何依赖，只适用于移动端。
 
 ## `Alert(title, content, buttons)`
 

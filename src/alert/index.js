@@ -1,5 +1,5 @@
 import {NAMESPACE} from '../constant';
-import {scaleEnter, scaleLeave, getType} from '../func';
+import {scaleEnter, scaleLeave, getType, fastClick} from '../func';
 import * as $container from '../container';
 import './styles.scss';
 
@@ -25,14 +25,15 @@ let alertElement = document.createElement('div');
 alertElement.className = `${NAMESPACE}__alert-main`;;
 alertContainer.appendChild(alertElement);
 
-alertContainer.addEventListener('click', (event) => {
+
+fastClick(alertContainer, (event) => {
     let button = event.srcElement;
     let index = button.getAttribute(BUTTON_INDEX);
     if (index == null) return;
     let handler = buttonHandlers[index];
     if (typeof handler === 'function') handler();
     hide(); 
-}, false);
+});
 
 
 function renderTitle(text) {

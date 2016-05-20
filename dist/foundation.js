@@ -171,6 +171,7 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.fastClick = undefined;
 	exports.getType = getType;
 	exports.fadeEnter = fadeEnter;
 	exports.fadeLeave = fadeLeave;
@@ -261,6 +262,42 @@ module.exports =
 	    }
 	}
 
+	var fastClick = exports.fastClick = function () {
+	    var startX = 0,
+	        startY = 0,
+	        cancel = false;
+
+	    function onTouchStart(event) {
+	        var touches = event.touches;
+	        if (touches.length === 1) {
+	            startX = touches[0].pageX;
+	            startY = touches[0].pageY;
+	        }
+	    }
+
+	    function onTouchMove(event) {
+	        var distance = 10;
+	        var pageX = event.touches[0].pageX;
+	        var pageY = event.touches[0].pageY;
+	        if (Math.abs(pageX - startX) > distance || Math.abs(pageY - startY) > distance) cancel = true;
+	    }
+
+	    return function (node, callback) {
+	        node.addEventListener('touchstart', onTouchStart, false);
+	        node.addEventListener('touchmove', onTouchMove, false);
+	        node.addEventListener('touchend', function (event) {
+	            if (cancel === false) {
+	                callback(event);
+	                event.preventDefault();
+	            } else {
+	                cancel = false;
+	                startX = startY = 0;
+	            }
+	        }, false);
+	        if (!navigator.userAgent.toLowerCase().match('mobile')) node.addEventListener('click', callback, false);
+	    };
+	}();
+
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
@@ -311,7 +348,7 @@ module.exports =
 	actionsheetElement.className = ACTIONSHEET;
 	$container.append(actionsheetElement);
 
-	actionsheetElement.addEventListener('click', function (event) {
+	(0, _func.fastClick)(actionsheetElement, function (event) {
 	    var button = event.srcElement;
 	    var index = button.getAttribute(BUTTON_INDEX);
 	    if (index === CANCEL_INDEX) {
@@ -323,9 +360,9 @@ module.exports =
 	            hide();
 	        }
 	    }
-	}, false);
+	});
 
-	$container.mask.addEventListener('click', hide, false);
+	(0, _func.fastClick)($container.mask, hide);
 
 	// title
 	function renderTitle(text) {
@@ -437,14 +474,14 @@ module.exports =
 	alertElement.className = _constant.NAMESPACE + '__alert-main';;
 	alertContainer.appendChild(alertElement);
 
-	alertContainer.addEventListener('click', function (event) {
+	(0, _func.fastClick)(alertContainer, function (event) {
 	    var button = event.srcElement;
 	    var index = button.getAttribute(BUTTON_INDEX);
 	    if (index == null) return;
 	    var handler = buttonHandlers[index];
 	    if (typeof handler === 'function') handler();
 	    hide();
-	}, false);
+	});
 
 	function renderTitle(text) {
 	    if (typeof text === 'string') {

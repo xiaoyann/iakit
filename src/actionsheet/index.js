@@ -1,6 +1,6 @@
 import {NAMESPACE} from '../constant';
 import * as $container from '../container';
-import {bottomEnter, bottomLeave} from '../func';
+import {bottomEnter, bottomLeave, fastClick} from '../func';
 import './styles.scss';
 
 
@@ -23,7 +23,8 @@ var actionsheetElement = document.createElement('div');
 actionsheetElement.className = ACTIONSHEET;    
 $container.append(actionsheetElement);
 
-actionsheetElement.addEventListener('click', (event) => {
+
+fastClick(actionsheetElement, (event) => {
     let button = event.srcElement;
     let index = button.getAttribute(BUTTON_INDEX);
     if (index === CANCEL_INDEX) {
@@ -35,10 +36,10 @@ actionsheetElement.addEventListener('click', (event) => {
             hide();
         }
     }
-}, false);
+});
 
 
-$container.mask.addEventListener('click', hide, false);
+fastClick($container.mask, hide);
 
 
 // title

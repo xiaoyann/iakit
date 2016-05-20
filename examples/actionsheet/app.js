@@ -5,7 +5,7 @@ let btn1 = document.getElementById('btn1');
 let btn2 = document.getElementById('btn2');
 
 
-btn1.onclick = function() {
+fastOnClick(btn1, function() {
     ActionSheet({
         options: [
             {
@@ -24,5 +24,8 @@ btn1.onclick = function() {
         destructiveIndex: 1,
         title: '确认要分手吗？'
     });
-};
+});
+
+
+
 

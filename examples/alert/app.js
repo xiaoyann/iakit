@@ -6,9 +6,9 @@ let btn3 = document.getElementById('btn3');
 let btn4 = document.getElementById('btn4');
 let btn5 = document.getElementById('btn5');
 
-btn1.onclick = function() {
+fastOnClick(btn1, function() {
     Alert('注册失败');
-};
+});
 
 btn2.onclick = function() {
     Alert(
@@ -17,15 +17,22 @@ btn2.onclick = function() {
     );
 };
 
-btn3.onclick = function() {
+fastOnClick(btn2, function() {
+    Alert(
+        '注册失败', 
+        '该邮箱已经被注册，如果有您有任何疑问请咨询客服。'
+    );
+});
+
+fastOnClick(btn3, function() {
     Alert(
         '该邮箱已经被注册，如果有您有任何疑问请咨询客服。', 
         function () {
         }
     );
-};
+});
 
-btn4.onclick = function() {
+fastOnClick(btn4, function() {
     Alert(
         '注册失败', 
         [
@@ -41,9 +48,10 @@ btn4.onclick = function() {
             }
         ]
     );
-};
+});
 
-btn5.onclick = function() {
+
+fastOnClick(btn5, function() {
     Alert(
         '注册失败', 
         '该邮箱已经被注册，如果有您有任何疑问请咨询客服。', 
@@ -65,7 +73,7 @@ btn5.onclick = function() {
             }
         ]
     );
-};
+});
 
 
 

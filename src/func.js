@@ -87,4 +87,47 @@ export function removeClass(node, name) {
 }
 
 
+export const fastClick = (function() {
+    let startX = 0, startY = 0, cancel = false;
+    
+    function onTouchStart(event) {
+        let touches = event.touches;
+        if (touches.length === 1) {
+            startX = touches[0].pageX;
+            startY = touches[0].pageY;
+        }
+    }
+
+    function onTouchMove(event) {
+        const distance = 10;
+        let pageX = event.touches[0].pageX;
+        let pageY = event.touches[0].pageY;
+        if (Math.abs(pageX - startX) > distance || Math.abs(pageY - startY) > distance) cancel = true;
+    }
+
+    return function(node, callback) {
+        node.addEventListener('touchstart', onTouchStart, false);
+        node.addEventListener('touchmove', onTouchMove, false);
+        node.addEventListener('touchend', (event) => {
+            if (cancel === false) {
+                callback(event);
+                event.preventDefault();
+            } else {
+                cancel = false;
+                startX = startY = 0;
+            }
+        }, false);
+        if (!navigator.userAgent.toLowerCase().match('mobile')) 
+            node.addEventListener('click', callback, false);
+    }
+})();
+
+
+
+
+
+
+
+
+
 

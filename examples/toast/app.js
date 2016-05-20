@@ -3,20 +3,22 @@ import {Toast} from 'foundation';
 
 let btn1 = document.getElementById('btn1');
 let btn2 = document.getElementById('btn2');
+let btn3 = document.getElementById('btn3');
 
-btn1.onclick = function() {
+
+fastOnClick(btn1, function() {
     Toast.showTop('注册成功', 1500, () => {
         console.log('toast hided')
     });
-};
+});
 
-btn2.onclick = function() {
+fastOnClick(btn2, function() {
     Toast.showCenter('注册成功', () => {
         console.log('toast hided')
     });
-};
+});
 
-btn3.onclick = function() {
+fastOnClick(btn3, function() {
     Toast.showBottom('注册成功');
-};
+});
 
