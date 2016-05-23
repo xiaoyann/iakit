@@ -1,6 +1,11 @@
 # foundation
 Alert, Toast, Loading, ActionSheet 常用组件封装，没有任何依赖，只适用于移动端。
 
+<img width="250" src="./docs/thumb_IMG_0644_1024.jpg">
+<img width="250" src="./docs/thumb_IMG_0646_1024.jpg">
+<img width="250" src="./docs/thumb_IMG_0647_1024.jpg">
+<img width="250" src="./docs/thumb_IMG_0648_1024.jpg">
+
 ## `Alert(title, content, buttons)`
 
 * title: `string`，必选

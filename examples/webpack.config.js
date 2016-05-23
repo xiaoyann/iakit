@@ -2,6 +2,22 @@ var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 
+var ip = (function() {
+    var os = require('os');
+    var interfaces = os.networkInterfaces();
+    var IPv4 = '127.0.0.1';
+    for (var key in interfaces) {
+        interfaces[key].some(function(details){
+            if (details.family == 'IPv4' && key == 'en0') {
+                IPv4 = details.address;
+                return true;
+            }
+        });
+    }
+    return IPv4;
+})();
+
+
 module.exports = {
 
     devtool: 'inline-source-map',
@@ -48,7 +64,7 @@ module.exports = {
     devServer: {
         inline: true,
         contentBase: path.resolve(__dirname, './'),
-        host: '172.16.5.150'
+        host: ip
     },
 }
 
