@@ -109,9 +109,9 @@ export default function(options) {
     let titleNode = renderTitle(options.title);
     let buttonsNode = renderButtons(options.options, options.destructiveIndex);
     let fragment = document.createDocumentFragment();
-    fragment.appendChild(titleNode);
-    fragment.appendChild(buttonsNode);
-    fragment.appendChild(cancelButton);
+    if (titleNode) fragment.appendChild(titleNode);
+    if (buttonsNode) fragment.appendChild(buttonsNode);
+    if (cancelButton) fragment.appendChild(cancelButton);
     actionsheetElement.appendChild(fragment);
     show();
 }

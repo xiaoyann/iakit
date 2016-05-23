@@ -330,9 +330,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var titleNode = renderTitle(options.title);
 	    var buttonsNode = renderButtons(options.options, options.destructiveIndex);
 	    var fragment = document.createDocumentFragment();
-	    fragment.appendChild(titleNode);
-	    fragment.appendChild(buttonsNode);
-	    fragment.appendChild(cancelButton);
+	    if (titleNode) fragment.appendChild(titleNode);
+	    if (buttonsNode) fragment.appendChild(buttonsNode);
+	    if (cancelButton) fragment.appendChild(cancelButton);
 	    actionsheetElement.appendChild(fragment);
 	    show();
 	};
