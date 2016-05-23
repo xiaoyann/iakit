@@ -1,5 +1,14 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["foundation"] = factory();
+	else
+		root["foundation"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -50,19 +59,23 @@ module.exports =
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.ActionSheet = exports.Loading = exports.Toast = exports.Alert = undefined;
+	exports.ActionSheet = exports.Toast = exports.Loading = exports.Modal = exports.Alert = undefined;
 
 	var _alert = __webpack_require__(5);
 
 	var _alert2 = _interopRequireDefault(_alert);
 
-	var _toast = __webpack_require__(7);
+	var _modal = __webpack_require__(7);
 
-	var _Toast = _interopRequireWildcard(_toast);
+	var _modal2 = _interopRequireDefault(_modal);
 
 	var _loading = __webpack_require__(6);
 
 	var _Loading = _interopRequireWildcard(_loading);
+
+	var _toast = __webpack_require__(8);
+
+	var _Toast = _interopRequireWildcard(_toast);
 
 	var _actionsheet = __webpack_require__(4);
 
@@ -72,17 +85,21 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//
-	// export Alert                from './alert';
-	// export Modal                from './modal';
-	// export * as Loading         from './loading';
-	// export * as Toast           from './toast';
-	// export ActionSheet          from './actionsheet';
+	exports.Alert = _alert2.default;
+	exports.Modal = _modal2.default;
+	exports.Loading = _Loading;
+	exports.Toast = _Toast;
+	exports.ActionSheet = _actionsheet2.default;
 
-	var Alert = exports.Alert = _alert2.default;
-	var Toast = exports.Toast = _Toast;
-	var Loading = exports.Loading = _Loading;
-	var ActionSheet = exports.ActionSheet = _actionsheet2.default;
+	// import _Alert               from './alert';
+	// import * as _Toast          from './toast';
+	// import * as _Loading        from './loading';
+	// import _ActionSheet         from './actionsheet';
+
+	// export const Alert          = _Alert;
+	// export const Toast          = _Toast;
+	// export const Loading        = _Loading;
+	// export const ActionSheet    = _ActionSheet;
 
 /***/ },
 /* 1 */
@@ -126,7 +143,7 @@ module.exports =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(10);
+	__webpack_require__(11);
 
 	var container = document.createElement('div');
 	container.className = _constant.NAMESPACE;
@@ -328,7 +345,7 @@ module.exports =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(8);
+	__webpack_require__(9);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -451,7 +468,7 @@ module.exports =
 
 	var $container = _interopRequireWildcard(_container);
 
-	__webpack_require__(9);
+	__webpack_require__(10);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -580,7 +597,7 @@ module.exports =
 
 	var $container = _interopRequireWildcard(_container);
 
-	__webpack_require__(11);
+	__webpack_require__(12);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -609,6 +626,12 @@ module.exports =
 
 /***/ },
 /* 7 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -628,7 +651,7 @@ module.exports =
 
 	var _func = __webpack_require__(3);
 
-	__webpack_require__(12);
+	__webpack_require__(13);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -687,12 +710,6 @@ module.exports =
 	}
 
 /***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
 /* 9 */
 /***/ function(module, exports) {
 
@@ -716,5 +733,13 @@ module.exports =
 
 	// removed by extract-text-webpack-plugin
 
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;
