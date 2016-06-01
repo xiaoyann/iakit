@@ -1,7 +1,9 @@
 $namespace:                 foundation      !default;
 $zIndexBase:                9999            !default;
-$zIndexAlert:               10000           !default;
 $zIndexActionSheet:         10000           !default;
+$zIndexAlert:               10001           !default;
+$zIndexToast:               10002           !default;
+$zIndexLoading:             10002           !default;
 $duration:                  0.3s            !default;
 $btnPrimaryColor:           #007AFF         !default;
 $btnDestructiveColor:       #FF3B30         !default;

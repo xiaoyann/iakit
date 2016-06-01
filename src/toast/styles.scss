@@ -4,10 +4,12 @@
 .foundation__toast {
     display: none;
     text-align: center;
-    position: relative;
+    position: absolute;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    left: 50%;
+    z-index: $zIndexToast;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .foundation__toast-main {

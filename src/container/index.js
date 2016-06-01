@@ -2,6 +2,10 @@ import {NAMESPACE} from '../constant';
 import {fadeEnter, fadeLeave} from '../func';
 import './styles.scss';
 
+var showCount = 0;
+var showWithMaskCount = 0;
+
+
 var container = document.createElement('div');
 container.className = NAMESPACE;
 
@@ -18,16 +22,21 @@ export function append(node) {
 
 
 export function show() {
+    showCount++;
     container.style.display = 'block';
 }
 
 
 export function hide() {
-    container.style.display = 'none';
+    if (--showCount <= 0) {
+        showCount = 0;
+        container.style.display = 'none';
+    }
 }
 
 
 export function showWithMask() {
+    showWithMaskCount++;
     mask.style.display = 'block';
     show();
     fadeEnter(mask);
@@ -35,10 +44,13 @@ export function showWithMask() {
 
 
 export function hideWithMask() {
-    fadeLeave(mask, () => {
-        mask.style.display = 'none';
-        hide();
-    });
+    showCount--;
+    if (--showWithMaskCount === 0) {
+        fadeLeave(mask, () => {
+            mask.style.display = 'none';
+            if (showCount === 0) hide();
+        });
+    }
 }
 
 

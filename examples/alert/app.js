@@ -1,4 +1,4 @@
-import {Alert} from 'foundation';
+import {Loading, Alert, Toast, ActionSheet} from 'foundation';
 
 let btn1 = document.getElementById('btn1');
 let btn2 = document.getElementById('btn2');
@@ -8,6 +8,32 @@ let btn5 = document.getElementById('btn5');
 
 fastOnClick(btn1, function() {
     Alert('注册失败');
+    
+    // Loading.show();
+    
+    // Toast.showCenter('xx');
+    // Loading.hide();
+    
+    setTimeout(() => {
+        ActionSheet({
+            options: [
+                {
+                    text: '我再想想',
+                    onClick: () => {
+                        // 是应该好好想想
+                    }
+                },
+                {
+                    text: '就这样吧',
+                    onClick: () => {
+                        // 借酒消愁去吧
+                    }
+                }
+            ],
+            destructiveIndex: 1,
+            title: '确认要分手吗？'
+        });
+    }, 1000);
 });
 
 btn2.onclick = function() {
