@@ -31,20 +31,10 @@
     line-height: 46px;
     color: $btnPrimaryColor;
     background-color: #fff;
-}
 
-.#{$namespace}__actionsheet-btn:before {
-    content: " ";
-    width: 100%;
-    height: 1px;
-    position: absolute;
-    top: -1px;
-    left: 0;
-    right: 0;
-    border-top: 1px solid #ccc;
-    font-size: 0;
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
+    &:before {
+        @include border-top;
+    }
 }
 
 .#{$namespace}__actionsheet-btn:active {

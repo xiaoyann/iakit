@@ -8,10 +8,47 @@ $duration:                  0.3s            !default;
 $btnPrimaryColor:           #007AFF         !default;
 $btnDestructiveColor:       #FF3B30         !default;
 
+
 @mixin transition($time: $duration) {
     -webkit-transition: all $time;
     transition: all $time;
 }
 
+
+//----------------
+// 1px border top
+//----------------
+@mixin border-top {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #CCC;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+}
+
+
+//----------------
+// 1px border bottom
+//----------------
+@mixin border-bottom {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid #CCC;
+    -webkit-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+}
 
 
