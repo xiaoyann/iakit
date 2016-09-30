@@ -37,10 +37,10 @@ fastClick(alertContainer, (event) => {
 
 
 function renderTitle(text) {
-    if (typeof text === 'string') {
+    if (text) {
         let node = document.createElement('h3');
         node.className = ALERT_TITLE;
-        node.textContent = text;
+        node.textContent = String(text);
         return node;
     } else {
         return null;
@@ -49,10 +49,10 @@ function renderTitle(text) {
 
 
 function renderContent(text) {
-    if (typeof text === 'string') {
+    if (text) {
         let node = document.createElement('div');
         node.className = ALERT_CONTENT;
-        node.textContent = text;
+        node.textContent = String(text);
         return node;
     } else {
         return null;
