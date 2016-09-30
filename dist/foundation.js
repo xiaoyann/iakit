@@ -497,10 +497,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	function renderTitle(text) {
-	    if (typeof text === 'string') {
+	    if (text) {
 	        var node = document.createElement('h3');
 	        node.className = ALERT_TITLE;
-	        node.textContent = text;
+	        node.textContent = String(text);
 	        return node;
 	    } else {
 	        return null;
@@ -508,10 +508,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function renderContent(text) {
-	    if (typeof text === 'string') {
+	    if (text) {
 	        var node = document.createElement('div');
 	        node.className = ALERT_CONTENT;
-	        node.textContent = text;
+	        node.textContent = String(text);
 	        return node;
 	    } else {
 	        return null;
