@@ -13,7 +13,7 @@ fastOnClick(btn1, function() {
 });
 
 fastOnClick(btn2, function() {
-    Toast.showCenter('注册成功', 1000000, () => {
+    Toast.showCenter('注册成功注册成功注册成功注册成功注册成功注册成功注册成功注册成功注册成功注册成功注册成功', 1000000, () => {
         console.log('toast hided')
     });
 });
