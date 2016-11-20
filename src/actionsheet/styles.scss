@@ -20,6 +20,11 @@
     background-color: #fff;
 }
 
+.#{$namespace}__actionsheet-btns {
+    max-height: 330px;
+    overflow: scroll;
+}
+
 .#{$namespace}__actionsheet-btn {
     display: block;
     width: 100%;

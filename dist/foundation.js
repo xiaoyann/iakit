@@ -322,6 +322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	exports.default = function (options) {
+	    config = options;
 	    var cancelButton = renderCancel();
 	    var titleNode = renderTitle(options.title);
 	    var buttonsNode = renderButtons(options.options, options.destructiveIndex);
@@ -347,6 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var ACTIONSHEET = _constant.NAMESPACE + '__actionsheet';
 	var ACTIONSHEET_TITLE = _constant.NAMESPACE + '__actionsheet-title';
+	var ACTIONSHEET_BUTTONS = _constant.NAMESPACE + '__actionsheet-btns';
 	var ACTIONSHEET_BUTTON = _constant.NAMESPACE + '__actionsheet-btn';
 	var ACTIONSHEET_CANCEL = _constant.NAMESPACE + '__actionsheet-cancel';
 	var ACTIONSHEET_DESTRUCTIVE = _constant.NAMESPACE + '__actionsheet-destructive';
@@ -355,7 +357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var __SHOWED__ = false;
 	// 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
-	var buttonHandlers = [];
+	var config = {};
 
 	var actionsheetElement = document.createElement('div');
 	actionsheetElement.className = ACTIONSHEET;
@@ -363,19 +365,26 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(0, _func.fastClick)(actionsheetElement, function (event) {
 	    var button = event.srcElement;
+	    if (!button.hasAttribute(BUTTON_INDEX)) {
+	        return;
+	    }
 	    var index = button.getAttribute(BUTTON_INDEX);
 	    if (index === CANCEL_INDEX) {
-	        hide();
+	        hide(true);
 	    } else {
-	        var handler = buttonHandlers[index];
-	        if (typeof handler === 'function') {
-	            handler();
-	            hide();
+	        var options = config.options[index];
+	        if (typeof options.onClick === 'function') {
+	            options.onClick(index, options.text);
+	        } else if (typeof config.onClick === 'function') {
+	            config.onClick(index, options.text);
 	        }
+	        hide(false);
 	    }
 	});
 
-	(0, _func.fastClick)($container.mask, hide);
+	(0, _func.fastClick)($container.mask, function () {
+	    hide(true);
+	});
 
 	// title
 	function renderTitle(text) {
@@ -393,6 +402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function renderButtons(buttons, destructiveIndex) {
 	    if (!buttons) return null;
 	    var wrapper = document.createElement('div');
+	    wrapper.className = ACTIONSHEET_BUTTONS;
 	    buttons.forEach(function (button, index) {
 	        var node = document.createElement('a');
 	        if (destructiveIndex === index) {
@@ -400,9 +410,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	            node.className = ACTIONSHEET_BUTTON;
 	        }
-	        node.textContent = button.text;
+	        node.textContent = typeof button === 'string' ? button : button.text;
 	        node.setAttribute(BUTTON_INDEX, index);
-	        if (button.onClick) buttonHandlers[index] = button.onClick;
 	        wrapper.appendChild(node);
 	    });
 	    return wrapper;
@@ -416,14 +425,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return element;
 	}
 
-	function hide() {
+	function hide(isCancel) {
 	    if (!__SHOWED__) return;
+	    if (isCancel && typeof config.onCancel === 'function') {
+	        config.onCancel();
+	    }
 	    $container.hideWithMask();
 	    (0, _func.bottomLeave)(actionsheetElement, function () {
 	        actionsheetElement.style.display = 'none';
 	        actionsheetElement.innerHTML = '';
-	        buttonHandlers = [];
 	        __SHOWED__ = false;
+	        config = {};
 	    });
 	}
 

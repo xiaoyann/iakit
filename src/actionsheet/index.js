@@ -6,6 +6,7 @@ import './styles.scss';
 
 const ACTIONSHEET                   = `${NAMESPACE}__actionsheet`;
 const ACTIONSHEET_TITLE             = `${NAMESPACE}__actionsheet-title`;
+const ACTIONSHEET_BUTTONS           = `${NAMESPACE}__actionsheet-btns`;
 const ACTIONSHEET_BUTTON            = `${NAMESPACE}__actionsheet-btn`;
 const ACTIONSHEET_CANCEL            = `${NAMESPACE}__actionsheet-cancel`;
 const ACTIONSHEET_DESTRUCTIVE       = `${NAMESPACE}__actionsheet-destructive`;
@@ -66,6 +67,7 @@ function renderTitle(text) {
 function renderButtons(buttons, destructiveIndex) {
     if (!buttons) return null;
     var wrapper = document.createElement('div');
+    wrapper.className = ACTIONSHEET_BUTTONS;
     buttons.forEach((button, index) => {
         let node = document.createElement('a');
         if (destructiveIndex === index) {
