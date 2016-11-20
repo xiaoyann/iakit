@@ -10,9 +10,6 @@ fastOnClick(btn1, function() {
         options: [
             {
                 text: '我再想想',
-                onClick: () => {
-                    // 是应该好好想想
-                }
             },
             {
                 text: '就这样吧',
@@ -22,7 +19,13 @@ fastOnClick(btn1, function() {
             }
         ],
         destructiveIndex: 1,
-        title: '确认要分手吗？'
+        title: '确认要分手吗？',
+        onClick(i, text) {
+            console.log('onClick', i, text);
+        },
+        onCancel() {
+            console.log('onCancel');
+        }
     });
 });
 

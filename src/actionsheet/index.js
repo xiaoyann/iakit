@@ -15,7 +15,7 @@ const CANCEL_INDEX                  = 'cancel';
 
 let __SHOWED__ = false;
 // 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
-let buttonHandlers = [];
+let config = {};
 
 
 
@@ -26,20 +26,27 @@ $container.append(actionsheetElement);
 
 fastClick(actionsheetElement, (event) => {
     let button = event.srcElement;
+    if (!button.hasAttribute(BUTTON_INDEX)) {
+        return;
+    }
     let index = button.getAttribute(BUTTON_INDEX);
     if (index === CANCEL_INDEX) {
-        hide();
+        hide(true);
     } else {
-        let handler = buttonHandlers[index];
-        if (typeof handler === 'function') {
-            handler(); 
-            hide();
+        let options = config.options[index];
+        if (typeof options.onClick === 'function') {
+            options.onClick(index, options.text); 
+        } else if(typeof config.onClick === 'function') {
+            config.onClick(index, options.text); 
         }
+        hide(false);
     }
 });
 
 
-fastClick($container.mask, hide);
+fastClick($container.mask, () => {
+    hide(true);
+});
 
 
 // title
@@ -66,9 +73,8 @@ function renderButtons(buttons, destructiveIndex) {
         } else {
             node.className = ACTIONSHEET_BUTTON;
         }
-        node.textContent = button.text;
+        node.textContent = typeof button === 'string' ? button : button.text;
         node.setAttribute(BUTTON_INDEX, index);
-        if (button.onClick) buttonHandlers[index] = button.onClick;
         wrapper.appendChild(node);
     });
     return wrapper;
@@ -84,14 +90,17 @@ function renderCancel() {
 }
 
 
-function hide() {
+function hide(isCancel) {
     if (!__SHOWED__) return;
+    if (isCancel && typeof config.onCancel === 'function') {
+        config.onCancel();
+    }
     $container.hideWithMask();
     bottomLeave(actionsheetElement, () => {
         actionsheetElement.style.display = 'none';
         actionsheetElement.innerHTML = '';
-        buttonHandlers = [];
         __SHOWED__ = false;
+        config = {};
     });
 }
 
@@ -105,6 +114,7 @@ function show() {
 
 
 export default function(options) {
+    config = options;
     let cancelButton = renderCancel();
     let titleNode = renderTitle(options.title);
     let buttonsNode = renderButtons(options.options, options.destructiveIndex);
