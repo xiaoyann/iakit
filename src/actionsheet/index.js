@@ -8,6 +8,7 @@ const ACTIONSHEET                   = `${NAMESPACE}__actionsheet`;
 const ACTIONSHEET_TITLE             = `${NAMESPACE}__actionsheet-title`;
 const ACTIONSHEET_BUTTONS           = `${NAMESPACE}__actionsheet-btns`;
 const ACTIONSHEET_BUTTON            = `${NAMESPACE}__actionsheet-btn`;
+const ACTIONSHEET_BUTTON_DISABLE    = `${NAMESPACE}__actionsheet-btn--disable`;
 const ACTIONSHEET_CANCEL            = `${NAMESPACE}__actionsheet-cancel`;
 const ACTIONSHEET_DESTRUCTIVE       = `${NAMESPACE}__actionsheet-destructive`;
 const BUTTON_INDEX                  = 'btn-index';
@@ -35,6 +36,9 @@ fastClick(actionsheetElement, (event) => {
         hide(true);
     } else {
         let options = config.options[index];
+        if (options.disable === true) {
+            return;
+        }
         if (typeof options.onClick === 'function') {
             options.onClick(index, options.text); 
         } else if(typeof config.onClick === 'function') {
@@ -70,11 +74,13 @@ function renderButtons(buttons, destructiveIndex) {
     wrapper.className = ACTIONSHEET_BUTTONS;
     buttons.forEach((button, index) => {
         let node = document.createElement('a');
-        if (destructiveIndex === index) {
-            node.className = ACTIONSHEET_BUTTON + ' ' + ACTIONSHEET_DESTRUCTIVE;
-        } else {
-            node.className = ACTIONSHEET_BUTTON;
+        let classList = [ACTIONSHEET_BUTTON];
+        if (button.disable === true) {
+            classList.push(ACTIONSHEET_BUTTON_DISABLE);
+        } else if (destructiveIndex === index) {
+            classList.push(ACTIONSHEET_DESTRUCTIVE);
         }
+        node.className = classList.join(' ');
         node.textContent = typeof button === 'string' ? button : button.text;
         node.setAttribute(BUTTON_INDEX, index);
         wrapper.appendChild(node);

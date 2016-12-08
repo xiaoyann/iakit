@@ -10,6 +10,7 @@ fastOnClick(btn1, function() {
         options: [
             {
                 text: '我再想想',
+                disable: true
             },
             {
                 text: '就这样吧',

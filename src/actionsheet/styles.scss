@@ -42,6 +42,10 @@
     }
 }
 
+.#{$namespace}__actionsheet-btn--disable {
+    color: $btnDisableColor;
+}
+
 .#{$namespace}__actionsheet-btn:active {
     background-color: #e4e4e4;
 }

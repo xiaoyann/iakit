@@ -350,6 +350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var ACTIONSHEET_TITLE = _constant.NAMESPACE + '__actionsheet-title';
 	var ACTIONSHEET_BUTTONS = _constant.NAMESPACE + '__actionsheet-btns';
 	var ACTIONSHEET_BUTTON = _constant.NAMESPACE + '__actionsheet-btn';
+	var ACTIONSHEET_BUTTON_DISABLE = _constant.NAMESPACE + '__actionsheet-btn--disable';
 	var ACTIONSHEET_CANCEL = _constant.NAMESPACE + '__actionsheet-cancel';
 	var ACTIONSHEET_DESTRUCTIVE = _constant.NAMESPACE + '__actionsheet-destructive';
 	var BUTTON_INDEX = 'btn-index';
@@ -373,6 +374,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        hide(true);
 	    } else {
 	        var options = config.options[index];
+	        if (options.disable === true) {
+	            return;
+	        }
 	        if (typeof options.onClick === 'function') {
 	            options.onClick(index, options.text);
 	        } else if (typeof config.onClick === 'function') {
@@ -405,11 +409,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    wrapper.className = ACTIONSHEET_BUTTONS;
 	    buttons.forEach(function (button, index) {
 	        var node = document.createElement('a');
-	        if (destructiveIndex === index) {
-	            node.className = ACTIONSHEET_BUTTON + ' ' + ACTIONSHEET_DESTRUCTIVE;
-	        } else {
-	            node.className = ACTIONSHEET_BUTTON;
+	        var classList = [ACTIONSHEET_BUTTON];
+	        if (button.disable === true) {
+	            classList.push(ACTIONSHEET_BUTTON_DISABLE);
+	        } else if (destructiveIndex === index) {
+	            classList.push(ACTIONSHEET_DESTRUCTIVE);
 	        }
+	        node.className = classList.join(' ');
 	        node.textContent = typeof button === 'string' ? button : button.text;
 	        node.setAttribute(BUTTON_INDEX, index);
 	        wrapper.appendChild(node);
