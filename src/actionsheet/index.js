@@ -1,142 +1,142 @@
-import {NAMESPACE} from '../constant';
-import * as $container from '../container';
-import {bottomEnter, bottomLeave, fastClick} from '../func';
-import './styles.scss';
+import * as utils from '../utils'
+import * as container from '../container'
+import './style.styl'
 
+const ATTR_BTNIDX_NAME = 'btn-index'
+const CANCEL_IDX = 'cancel'
 
-const ACTIONSHEET                   = `${NAMESPACE}__actionsheet`;
-const ACTIONSHEET_TITLE             = `${NAMESPACE}__actionsheet-title`;
-const ACTIONSHEET_BUTTONS           = `${NAMESPACE}__actionsheet-btns`;
-const ACTIONSHEET_BUTTON            = `${NAMESPACE}__actionsheet-btn`;
-const ACTIONSHEET_BUTTON_DISABLE    = `${NAMESPACE}__actionsheet-btn--disable`;
-const ACTIONSHEET_CANCEL            = `${NAMESPACE}__actionsheet-cancel`;
-const ACTIONSHEET_DESTRUCTIVE       = `${NAMESPACE}__actionsheet-destructive`;
-const BUTTON_INDEX                  = 'btn-index';
-const CANCEL_INDEX                  = 'cancel';
-
-
-let __SHOWED__ = false;
-// 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
-let config = {};
-
-
-
-var actionsheetElement = document.createElement('div');
-actionsheetElement.className = ACTIONSHEET;    
-$container.append(actionsheetElement);
-
-
-fastClick(actionsheetElement, (event) => {
-    let button = event.srcElement;
-    if (!button.hasAttribute(BUTTON_INDEX)) {
-        return;
-    }
-    let index = button.getAttribute(BUTTON_INDEX);
-    if (index === CANCEL_INDEX) {
-        hide(true);
-    } else {
-        let options = config.options[index];
-        if (options.disable === true) {
-            return;
-        }
-        if (typeof options.onClick === 'function') {
-            options.onClick(index, options.text); 
-        } else if(typeof config.onClick === 'function') {
-            config.onClick(index, options.text); 
-        }
-        hide(false);
-    }
-});
-
-
-fastClick($container.mask, () => {
-    hide(true);
-});
-
-
-// title
-function renderTitle(text) {
-    if (text) {
-        var element = document.createElement('p');
-        element.className = ACTIONSHEET_TITLE;
-        element.textContent = text;
-        return element;
-    } else {
-        return null;
-    }
+function renderTitle (text) {
+  const element = document.createElement('div')
+  element.innerHTML = text
+  utils.addClass(element, 'actionsheet-title')
+  return element
 }
 
+function renderButtons (buttons, destructiveIndex) {
+  const wrapper = document.createElement('div')
+  utils.addClass(wrapper, 'actionsheet-btns')
 
-// buttons
-function renderButtons(buttons, destructiveIndex) {
-    if (!buttons) return null;
-    var wrapper = document.createElement('div');
-    wrapper.className = ACTIONSHEET_BUTTONS;
-    buttons.forEach((button, index) => {
-        let node = document.createElement('a');
-        let classList = [ACTIONSHEET_BUTTON];
+  buttons.forEach((button, index) => {
+    let node = document.createElement('div')
+    let classList = ['actionsheet-btn bd-1px']
+
+    node.setAttribute(ATTR_BTNIDX_NAME, index)
+    node.innerHTML = typeof button === 'string' ? button : button.text
+
+    if (button.disable === true) {
+      classList.push('actionsheet-disable')
+    } else if (destructiveIndex === index) {
+      classList.push('actionsheet-destructive')
+    }
+
+    utils.addClass(node, classList.join(' '))
+    wrapper.appendChild(node)
+  })
+
+  return wrapper
+}
+
+function renderCancel () {
+  let element = document.createElement('div')
+  element.innerHTML = '取消'
+  element.setAttribute(ATTR_BTNIDX_NAME, CANCEL_IDX)
+  utils.addClass(element, 'actionsheet-btn actionsheet-cancel')
+  return element
+}
+
+class ActionSheet {
+  constructor(container) {
+    const el = document.createElement('div')
+    utils.addClass(el, 'actionsheet')
+
+    utils.fastclick(el, (event) => {
+      let config = this.config
+      let node = event.srcElement
+      let index = node.getAttribute(ATTR_BTNIDX_NAME)
+      if (index === null) {
+        return
+      }
+      if (index === CANCEL_IDX) {
+        this.hide(true)
+      } else {
+        let button = config.buttons[index]
         if (button.disable === true) {
-            classList.push(ACTIONSHEET_BUTTON_DISABLE);
-        } else if (destructiveIndex === index) {
-            classList.push(ACTIONSHEET_DESTRUCTIVE);
+          return
         }
-        node.className = classList.join(' ');
-        node.textContent = typeof button === 'string' ? button : button.text;
-        node.setAttribute(BUTTON_INDEX, index);
-        wrapper.appendChild(node);
-    });
-    return wrapper;
-}
+        if (typeof button.onClick === 'function') {
+          button.onClick(index, button.text)
+        } else if (typeof config.onClick === 'function') {
+          config.onClick(index, button.text)
+        }
+        this.hide(false)
+      }
+    })
 
+    utils.fastclick(container.mask, () => this.hide(true))
+    container.append(el)
 
-function renderCancel() {
-    let element = document.createElement('a');
-    element.className = ACTIONSHEET_BUTTON + ' ' + ACTIONSHEET_CANCEL;
-    element.textContent = '取消';
-    element.setAttribute(BUTTON_INDEX, CANCEL_INDEX);
-    return element;
-}
+    this.showed = false
+    this.$el = el
+    this.$container = container
+  }
 
-
-function hide(isCancel) {
-    if (!__SHOWED__) return;
-    if (isCancel && typeof config.onCancel === 'function') {
-        config.onCancel();
+  hide (isCancel) {
+    if (isCancel && typeof this.config.onCancel === 'function') {
+      this.config.onCancel()
     }
-    $container.hideWithMask();
-    bottomLeave(actionsheetElement, () => {
-        actionsheetElement.style.display = 'none';
-        actionsheetElement.innerHTML = '';
-        __SHOWED__ = false;
-        config = {};
-    });
+    this.$container.hideWithMask()
+    utils.bottomLeave(this.$el, () => {
+      utils.hideNode(this.$el)
+      this.$el.innerHTML = ''
+      this.config = {}
+      this.showed = false
+    })
+  }
+
+  show () {
+    utils.showNode(this.$el)
+    this.$container.showWithMask()
+    utils.bottomEnter(this.$el)
+  }
+
+  render(options) {
+    if (this.showed) {
+      return
+    }
+
+    const config = {}
+
+    for (let key in options) {
+      config[key] = options[key]
+    }
+
+    config.buttons = config.options.map((item) => {
+      if (typeof item === 'string') {
+        return { text: item, disable: false, onClick: undefined }
+      } else {
+        return item
+      }
+    })
+
+    config.options = undefined
+
+    this.config = config
+
+    if (config.title) {
+      this.$el.appendChild(renderTitle(config.title))
+    }
+
+    if (config.buttons.length > 0) {
+      this.$el.appendChild(renderButtons(config.buttons, config.destructiveIndex))
+    }
+
+    this.$el.appendChild(renderCancel())
+    this.show()
+  }
 }
 
+const instance = new ActionSheet(container)
 
-function show() {
-    __SHOWED__ = true;
-    actionsheetElement.style.display = 'block';
-    $container.showWithMask();
-    bottomEnter(actionsheetElement);
+export function actionSheet(options) {
+  instance.render(options)
 }
-
-
-export default function(options) {
-    config = options;
-    let cancelButton = renderCancel();
-    let titleNode = renderTitle(options.title);
-    let buttonsNode = renderButtons(options.options, options.destructiveIndex);
-    let fragment = document.createDocumentFragment();
-    if (titleNode) fragment.appendChild(titleNode);
-    if (buttonsNode) fragment.appendChild(buttonsNode);
-    if (cancelButton) fragment.appendChild(cancelButton);
-    actionsheetElement.appendChild(fragment);
-    show();
-}
-
-
-
-
-
-
-

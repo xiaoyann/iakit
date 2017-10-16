@@ -1,16 +1,11 @@
-import {Loading} from 'foundation';
+import * as iakit from '../../src/index'
+import { fastclick } from '../../src/utils'
 
+let btn1 = document.getElementById('btn1')
 
-let btn1 = document.getElementById('btn1');
-let btn2 = document.getElementById('btn2');
-
-fastOnClick(btn1, function() {
-    Loading.show();
-    setTimeout(() => {
-        Loading.hide();
-    }, 2000);
-});
-
-fastOnClick(btn2, function() {
-    Loading.show();
-});
+fastclick(btn1, function() {
+  iakit.loading.show()
+  setTimeout(() => {
+    iakit.loading.hide()
+  }, 3000)
+})

@@ -1,0 +1,76 @@
+/**
+ * 全局变量
+ */
+
+$namespace = iakit
+$duration = 0.3s
+$zIndexBase = 999
+$zIndexActionSheet = 1000
+$zIndexAlert = 1001
+$zIndexToast = 1001
+$zIndexLoading = 1002
+$primaryColor = #1D8CE0
+$disableColor = #999999
+$destructiveColor = #FF3B30
+
+
+/**
+ * 淡入淡出动画
+ */
+
+.{$namespace}-fade-enter,
+.{$namespace}-fade-leave {
+  opacity: 0;
+}
+
+
+/**
+ * 缩放动画
+ */
+
+.{$namespace}-scale-enter,
+.{$namespace}-scale-leave {
+  opacity: 0;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+
+/**
+ * 从底部出来，从底部隐藏
+ */
+
+.{$namespace}-bottom-enter,
+.{$namespace}-bottom-leave {
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+
+
+
+/**
+ * 隐藏元素
+ */
+
+.{$namespace}-hidden {
+  display: none;
+}
+
+
+.{$namespace}-bd-1px {
+  position: relative;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #CCC;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}

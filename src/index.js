@@ -1,4 +1,4 @@
-export Alert                from './alert';
-export * as Loading         from './loading';
-export * as Toast           from './toast';
-export ActionSheet          from './actionsheet';
+export * from './alert'
+export * from './loading'
+export * from './toast'
+export * from './actionSheet'

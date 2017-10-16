@@ -1,49 +1,37 @@
-import {NAMESPACE} from '../constant';
-import * as $container from '../container';
-import './styles.scss';
+import * as utils from '../utils'
+import * as container from '../container'
+import './style.styl'
 
+export const loading = {
+  $el: null,
+  $container: null,
+  inited: false,
 
-const LOADING                   = `${NAMESPACE}__loading`;
-const LOADING_INDICATOR         = `${NAMESPACE}__loading-indicator`;
+  init() {
+    if (this.inited) return this
+    this.$container = container
+    this.$el = document.createElement('div')
+    utils.addClass(this.$el, 'loading')
+    let indicator = document.createElement('div')
+    utils.addClass(indicator, 'loading-indicator')
+    this.$el.appendChild(indicator)
+    this.$container.append(this.$el)
+    utils.hideNode(this.$el)
+    this.inited = true
+  },
 
+  show() {
+    this.$container.show()
+    utils.showNode(this.$el)
+  },
 
-var loadingElement = (function() {
-    let loading = document.createElement('div');
-    loading.className = LOADING;
-    let indicator = document.createElement('div');
-    indicator.className = LOADING_INDICATOR;
-    loading.appendChild(indicator);
-    $container.append(loading);
-    return loading;
-})();
-
-
-export function show() {
-    $container.show();
-    loadingElement.style.display = 'block';
+  hide() {
+    this.$container.hide()
+    utils.hideNode(this.$el)
+  }
 }
 
-
-export function hide() {
-    $container.hide();
-    loadingElement.style.display = 'none';
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+loading.init()
 
 
 

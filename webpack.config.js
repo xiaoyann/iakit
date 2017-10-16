@@ -1,33 +1,47 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const projectName = require('./package.json').name
 
-module.exports = {
-    output: {
-        library: 'foundation',
-        libraryTarget: 'umd'
-    },
+const config = {
+  entry: './src/index.js',
 
-    module: {
-        loaders: [
-            {
-                test: /\.js$/, 
-                loader: 'babel'
-            },
-            {
-                test: /\.(scss|css)$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
-            },
-            {
-                test: /\.(?:jpg|gif|png)$/,
-                loader: 'url?limit=8000'
-            }
-        ]
-    },
+  output: {
+    path: __dirname + '/dist',
+    filename: projectName + '.js',
+    library: projectName,
+    libraryTarget: 'umd'
+  },
 
-    plugins: [
-        new ExtractTextPlugin('foundation.css'),
-        new webpack.optimize.OccurenceOrderPlugin(),
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.(styl|css)$/,
+        loader: ExtractTextPlugin.extract({
+          use: ['css-loader', 'stylus-loader']
+        })
+      },
+      {
+        test: /\.(?:jpg|gif|png)$/,
+        loader: 'url?limit=8000'
+      }
     ]
+  },
+
+  plugins: [
+    new ExtractTextPlugin(projectName + '.css'),
+  ]
 }
 
+webpack(config, (err, stats) => {
+  if (err) throw err
+  console.log(stats.toString({
+    colors: true,
+    chunks: false,
+    modules: false
+  }))
+})

@@ -1,44 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>Foundation - ActionSheet</title>
-    <style>
-        body {
-            margin: 0;
-        }
-
-        .btn {
-            width: 100%;
-            height: 50px;
-            margin-top: 20px;
-            color: #fff;
-            outline: none;
-            text-align: center;
-            line-height: 50px;
-            background-color: blue;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>actionSheet</title>
+  <style>
+    html * {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    body {
+      margin: 0;
+    }
+    .example {
+      padding: 15px;
+    }
+    .btn {
+      margin-bottom: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #137BC7;
+      border-radius: 2px;
+      text-align: center;
+      color: #fff;
+      background-color: #20A0FF
+    }
+    .content {
+      padding: 10px 0;
+      text-align: center;
+      font-size: 12px;
+      background-color: #f5f5f5;
+    }
+  </style>
 </head>
 <body>
-    
-    <div id="btn1" class="btn">show</div>
-    
-    <!-- <div class="foundation" style="display: block">
-        <div class="foundation__actionsheet">
-            <p class="foundation__actionsheet-title">确定要分手吗？</p>
-            <div>
-                <a class="foundation__actionsheet-btn" href="javascript:;">我再想想</a>
-                <a class="foundation__actionsheet-btn foundation__actionsheet-destructive" href="javascript:;">心意已决</a>
-            </div>
-            <a class="foundation__actionsheet-btn foundation__actionsheet-cancel" href="javascript:;">取消</a>
-        </div>
-        <div class="foundation__mask" style="display: block"></div>
-    </div>        -->
-
-<script src="../fastclick.js"></script>
-<script src="/__build__/lib.js"></script> 
-<script src="/__build__/actionsheet.js"></script> 
+  <div class="example">
+    <div id="btn1" class="btn">基本用法</div>
+    <div class="content">selected option: { text: , index:  }</div>
+  </div>
+  <script src="/js/actionSheet.js"></script>
 </body>
 </html>

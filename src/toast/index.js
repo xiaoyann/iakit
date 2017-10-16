@@ -1,71 +1,71 @@
-import {NAMESPACE} from '../constant';
-import * as $container from '../container';
-import {scaleEnter, scaleLeave} from '../func';
-import './styles.scss';
+import * as utils from '../utils'
+import * as container from '../container'
+import './style.styl'
 
+export const toast = {
+  $el: null,
+  $container: null,
+  inited: false,
 
-const TOAST                 = `${NAMESPACE}__toast`;
-const TOAST_MAIN            = `${NAMESPACE}__toast-main`;
-const POSITION_TOP          = '10%';
-const POSITION_CENTER       = '50%';
-const POSITION_BOTTOM       = '90%';
+  init () {
+    if (this.inited) {
+      return
+    }
 
+    const wrapper = document.createElement('div')
+    utils.addClass(wrapper, 'toast')
 
-var toastElement = document.createElement('div');
-toastElement.className = TOAST;
-var toastContent = document.createElement('div');
-toastContent.className = TOAST_MAIN;
-toastElement.appendChild(toastContent);
-$container.append(toastElement);
+    const toastMain = document.createElement('div')
+    utils.addClass(toastMain, 'toast-main')
 
+    wrapper.appendChild(toastMain)
+    container.append(wrapper)
+    utils.hideNode(wrapper)
 
-function show(text, time, callback, position) {
-    toastContent.textContent = text;
-    toastElement.style.top = position;
-    toastElement.style.display = 'block';
-    
+    this.$el = toastMain
+    this.$wrapper = wrapper
+    this.$container = container
+    this.inited = true
+  },
+
+  hide (callback) {
+    utils.scaleLeave(this.$el, () => {
+      this.$el.innerHTML = ''
+      utils.hideNode(this.$wrapper)
+      this.$container.hide()
+      callback && callback()
+    })
+  },
+
+  show (text, time, callback, position) {
+    this.$el.innerHTML = text
+    this.$wrapper.style.top = position
+    utils.showNode(this.$wrapper)
+
     if (typeof time === 'function') {
-        callback = time;
-        time = undefined;
+      callback = time
+      time = undefined
     }
 
     setTimeout(() => {
-        hide(callback);
-    }, time || 1500);
+      this.hide(callback)
+    }, time || 1500)
 
-    $container.show();
-    scaleEnter(toastContent);
+    this.$container.show()
+    utils.scaleEnter(this.$el)
+  },
+
+  showTop (text, time, callback) {
+    this.show(text, time, callback, '10%')
+  },
+
+  showCenter (text, time, callback) {
+    this.show(text, time, callback, '50%')
+  },
+
+  showBottom (text, time, callback) {
+    this.show(text, time, callback, '90%')
+  }
 }
 
-
-function hide(callback) {
-    scaleLeave(toastContent, () => {
-        toastContent.textContent = '';
-        toastElement.style.display = 'none';
-        $container.hide();
-        if (typeof callback === 'function') {
-            callback();
-        }
-    });
-}
-
-
-export function showTop(text, time, callback) {
-    show(text, time, callback, POSITION_TOP);
-}
-
-
-export function showCenter(text, time, callback) {
-    show(text, time, callback, POSITION_CENTER);
-}
-
-
-export function showBottom(text, time, callback) {
-    show(text, time, callback, POSITION_BOTTOM);
-}
-
-
-
-
-
-
+toast.init()

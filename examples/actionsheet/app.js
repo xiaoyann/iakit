@@ -1,37 +1,36 @@
-import {ActionSheet} from 'foundation';
+import * as iakit from '../../src/index'
+import { fastclick } from '../../src/utils'
 
+let btn1 = document.getElementById('btn1')
+let content = document.querySelector('.content')
 
-let btn1 = document.getElementById('btn1');
-let btn2 = document.getElementById('btn2');
+function render(text, idx) {
+  content.innerHTML = `selected option: { text: ${text}, index: ${idx} }`
+}
 
-
-fastOnClick(btn1, function() {
-    ActionSheet({
-        options: [
-            {
-                text: '我再想想',
-                disable: true
-            },
-            {
-                text: '就这样吧',
-                onClick: () => {
-                    // 借酒消愁去吧
-                }
-            },
-            '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
-            '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
-        ],
-        destructiveIndex: 1,
-        title: '确认要分手吗？',
-        onClick(i, text) {
-            console.log('onClick', i, text);
-        },
-        onCancel() {
-            console.log('onCancel');
+fastclick(btn1, function() {
+  iakit.actionSheet({
+    options: [
+      {
+        text: '我再想想',
+        disable: true
+      },
+      {
+        text: '就这样吧',
+        onClick: (i, text) => {
+          render(text, i)
         }
-    });
-});
-
-
-
-
+      },
+      '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
+      '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
+    ],
+    destructiveIndex: 1,
+    title: '确认要分手吗？',
+    onClick(i, text) {
+      render(text, i)
+    },
+    onCancel() {
+      render('取消', '--')
+    }
+  })
+})

@@ -1,0 +1,72 @@
+@import '../public.styl';
+
+.{$namespace}-alert {
+  position: relative;
+  z-index: $zIndexAlert;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.{$namespace}-alert-main {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  border-radius: 4px;
+  background-color: #fff;
+  -webkit-transition: opacity $duration, -webkit-transform $duration, transform $duration;
+  transition: opacity $duration, -webkit-transform $duration, transform $duration;
+}
+
+.{$namespace}-alert-title {
+  margin: 0;
+  padding: 0 16px 15px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+}
+
+.{$namespace}-alert-content {
+  padding: 0 16px 15px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #757575;
+}
+
+.{$namespace}-alert-btn {
+  height: 40px;
+  font-size: 16px;
+  line-height: 40px;
+  text-align: center;
+  color: $primaryColor;
+  background-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.{$namespace}-alert-btn:active {
+  background-color: #e4e4e4;
+}
+
+.{$namespace}-alert-separate {
+  position: relative;
+  font-size: 0;
+  .{$namespace}-alert-btn {
+    display: inline-block;
+    width: 50%;
+  }
+  &:after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #ccc;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: scaleX(0.5) translateX(-50%);
+    transform: scaleX(0.5) translateX(-50%);
+  }
+}

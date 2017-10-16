@@ -1,53 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Foundation - Alert</title>
-    <style>
-        body {
-            margin: 0;
-        }
-
-        .btn {
-            width: 100%;
-            height: 50px;
-            margin-top: 20px;
-            color: #fff;
-            outline: none;
-            text-align: center;
-            line-height: 50px;
-            background-color: blue;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>alert</title>
+  <style>
+    html * {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    body {
+      margin: 0;
+    }
+    .example {
+      padding: 15px;
+    }
+    .btn {
+      margin-bottom: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #137BC7;
+      border-radius: 2px;
+      text-align: center;
+      color: #fff;
+      background-color: #20A0FF
+    }
+  </style>
 </head>
 <body>
-    
-    <div id="btn1" class="btn">Alert 1</div>
-    <div id="btn2" class="btn">Alert 2</div>
-    <div id="btn3" class="btn">Alert 3</div>
-    <div id="btn4" class="btn">Alert 4</div>
-    <div id="btn5" class="btn">Alert 5</div>
-    <!--
-    <div class="foundation">
-        <div class="foundation__alert">
-            <h3 class="foundation__alert-title">注册失败</h3>
-            <div class="foundation__alert-content">该邮箱已经被注册，该邮箱已经被注册该邮箱已经被注册</div>
-            <div class="foundation__alert-btns">
-                <a class="foundation__alert-btn">登录</a>
-                <a class="foundation__alert-btn">确定</a>
-                <a class="foundation__alert-btn">确定</a>
-            </div>
-        </div>    
-        <div class="foundation__toast"></div>
-        <div class="foundation__modal"></div>
-        <div class="foundation__loading"></div>
-        <div class="foundation__actionsheet"></div>
-        <div class="foundation__mask" id="js-foundation-mask"></div>
-    </div>       
-    -->
-<script src="../fastclick.js"></script>
-<script src="/__build__/lib.js"></script> 
-<script src="/__build__/alert.js"></script> 
+  <div class="example">
+    <div id="btn1" class="btn">基本用法</div>
+    <div id="btn2" class="btn">指定回调函数</div>
+    <div id="btn3" class="btn">自定义多个按钮</div>
+  </div>
+  <script src="/js/alert.js"></script>
 </body>
 </html>

@@ -1,105 +1,41 @@
-import {Loading, Alert, Toast, ActionSheet} from 'foundation';
+import * as iakit from '../../src/index'
+import { fastclick } from '../../src/utils'
 
-let btn1 = document.getElementById('btn1');
-let btn2 = document.getElementById('btn2');
-let btn3 = document.getElementById('btn3');
-let btn4 = document.getElementById('btn4');
-let btn5 = document.getElementById('btn5');
+let btn1 = document.getElementById('btn1')
+let btn2 = document.getElementById('btn2')
+let btn3 = document.getElementById('btn3')
 
-fastOnClick(btn1, function() {
-    Alert('注册失败');
-    
-    // Loading.show();
-    
-    // Toast.showCenter('xx');
-    // Loading.hide();
-    
-    // setTimeout(() => {
-    //     ActionSheet({
-    //         options: [
-    //             {
-    //                 text: '我再想想',
-    //                 onClick: () => {
-    //                     // 是应该好好想想
-    //                 }
-    //             },
-    //             {
-    //                 text: '就这样吧',
-    //                 onClick: () => {
-    //                     // 借酒消愁去吧
-    //                 }
-    //             }
-    //         ],
-    //         destructiveIndex: 1,
-    //         title: '确认要分手吗？'
-    //     });
-    // }, 1000);
-});
+fastclick(btn1, function() {
+  iakit.alert('该手机号已经被注册过了')
+})
 
-btn2.onclick = function() {
-    Alert(
-        '注册失败', 
-        '该邮箱已经被注册，如果有您有任何疑问请咨询客服。'
-    );
-};
+fastclick(btn2, function() {
+  iakit.alert(
+    '指定回调函数',
+    '点击确认按钮，执行指定的回调函数',
+    () => {
+      alert('已执行')
+    }
+  )
+})
 
-fastOnClick(btn2, function() {
-    Alert(
-        '注册失败', 
-        '该邮箱已经被注册，如果有您有任何疑问请咨询客服。'
-    );
-});
-
-fastOnClick(btn3, function() {
-    Alert(
-        '该邮箱已经被注册，如果有您有任何疑问请咨询客服。', 
-        function () {
+fastclick(btn3, function() {
+  iakit.alert(
+    '自定义按钮',
+    '按钮可以指定多个，每个按钮包括文本与点击事件两个属性',
+    [
+      {
+        text: '取消',
+        onClick: () => {
+          alert('点击了取消按钮')
         }
-    );
-});
-
-fastOnClick(btn4, function() {
-    Alert(
-        '注册失败', 
-        [
-            {
-                text: '取消', 
-                onClick: () => {
-                }
-            },
-            {
-                text: '确定', 
-                onClick: () => {
-                }
-            }
-        ]
-    );
-});
-
-
-fastOnClick(btn5, function() {
-    Alert(
-        '注册失败', 
-        '该邮箱已经被注册，如果有您有任何疑问请咨询客服。', 
-        [
-            {
-                text: '取消', 
-                onClick: () => {
-                }
-            },
-            {
-                text: '登录', 
-                onClick: () => {
-                }
-            },
-            {
-                text: '确定', 
-                onClick: () => {
-                }
-            }
-        ]
-    );
-});
-
-
-
+      },
+      {
+        text: '确定',
+        onClick: () => {
+          alert('点击了确定按钮')
+        }
+      }
+    ]
+  )
+})

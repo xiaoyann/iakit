@@ -1,151 +1,170 @@
-import {NAMESPACE} from '../constant';
-import {scaleEnter, scaleLeave, getType, fastClick} from '../func';
-import * as $container from '../container';
-import './styles.scss';
-
-
-const ALERT                     = `${NAMESPACE}__alert`;
-const ALERT_TITLE               = `${NAMESPACE}__alert-title`;
-const ALERT_CONTENT             = `${NAMESPACE}__alert-content`;
-const ALERT_BUTTONS             = `${NAMESPACE}__alert-btns`;
-const ALERT_BUTTON              = `${NAMESPACE}__alert-btn`;
-const BUTTONS_SEPARATOR         = `${NAMESPACE}__btns-separator`;
-const BUTTON_INDEX              = 'btn-index';
+import * as utils from '../utils'
+import * as container from '../container'
+import './style.styl'
 
 
 // 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
-var buttonHandlers          = [];
+const ATTR_BTNIDX_NAME = 'btn-idx'
 
 
-let alertContainer = document.createElement('div');
-alertContainer.className = ALERT;
-$container.append(alertContainer);
+function renderTitle (text) {
+  let node = document.createElement('h3')
+  node.innerHTML = text
+  utils.addClass(node, 'alert-title')
+  return node
+}
 
-let alertElement = document.createElement('div');
-alertElement.className = `${NAMESPACE}__alert-main`;;
-alertContainer.appendChild(alertElement);
+function renderContent (text) {
+  let node = document.createElement('div')
+  node.innerHTML = text
+  utils.addClass(node, 'alert-content')
+  return node
+}
+
+function renderButtons (options, handlers) {
+  let buttons = processOptions(options)
+  let wrapper = document.createElement('div')
+
+  utils.addClass(wrapper, 'alert-btns')
+  if (buttons.length === 2) {
+    utils.addClass(wrapper, 'alert-separate')
+  }
+
+  buttons.forEach((button, index) => {
+    let node = document.createElement('div')
+    node.innerHTML = button.text
+    utils.addClass(node, 'alert-btn bd-1px')
+    node.setAttribute(ATTR_BTNIDX_NAME, index)
+    wrapper.appendChild(node)
+    handlers[index] = button.onClick
+  })
+  return wrapper
+}
+
+/**
+ * options:
+ * [
+ *   { text: '', onClick: () => {} },
+ *   { text: '', onClick: () => {} }
+ * ]
+ */
+function processOptions (options) {
+  const type = utils.getType(options)
+  if (type === 'function') {
+    return [{
+      text: '确定',
+      onClick: options
+    }]
+  }
+  if (type === 'object') {
+    return [options]
+  }
+  if (type === 'array') {
+    return options
+  }
+  return [{ text: '确定' }]
+}
 
 
-fastClick(alertContainer, (event) => {
-    let button = event.srcElement;
-    let index = button.getAttribute(BUTTON_INDEX);
-    if (index == null) return;
-    let handler = buttonHandlers[index];
-    if (typeof handler === 'function') handler();
-    hide(); 
-});
+class Alert {
+  constructor(container) {
+    this.handlers = []
+    this.$container = container
 
+    this.$wrapper = document.createElement('div')
+    this.$el = document.createElement('div')
+    this.$wrapper.appendChild(this.$el)
 
-function renderTitle(text) {
-    if (text) {
-        let node = document.createElement('h3');
-        node.className = ALERT_TITLE;
-        node.textContent = String(text);
-        return node;
-    } else {
-        return null;
+    utils.addClass(this.$wrapper, 'alert')
+    utils.addClass(this.$el, 'alert-main')
+
+    utils.fastclick(this.$wrapper, (event) => {
+      let button = event.srcElement
+      let index = button.getAttribute(ATTR_BTNIDX_NAME)
+      if (index !== null) {
+        let handler = this.handlers[index]
+        if (typeof handler === 'function') handler(event)
+        this.hide()
+      }
+    })
+  }
+
+  show() {
+    this.$container.append(this.$wrapper)
+    utils.showNode(this.$wrapper)
+    this.$container.showWithMask()
+    utils.scaleEnter(this.$el)
+  }
+
+  hide() {
+    this.$container.hideWithMask()
+    utils.scaleLeave(this.$el, () => this.destroy())
+  }
+
+  destroy() {
+    this.$wrapper.parentNode.removeChild(this.$wrapper)
+    this.$wrapper = null
+    this.$el = null
+    this.handlers = []
+  }
+
+  render(title, message, buttons) {
+    let messageType = utils.getType(message)
+
+    if (messageType === 'undefined') {
+      message = title
+      title = undefined
     }
-}
-
-
-function renderContent(text) {
-    if (text) {
-        let node = document.createElement('div');
-        node.className = ALERT_CONTENT;
-        node.textContent = String(text);
-        return node;
-    } else {
-        return null;
-    }
-}
-
-
-function renderButtons(options) {
-    let buttons = processOptions(options);
-    let wrapper = document.createElement('div');
-    if (buttons.length === 2) {
-        wrapper.className = ALERT_BUTTONS + ' ' + BUTTONS_SEPARATOR;
-    } else {
-        wrapper.className = ALERT_BUTTONS;
-    }
-    buttons.forEach((button, index) => {
-        let node = document.createElement('a');
-        node.className = ALERT_BUTTON;
-        node.textContent = button.text;
-        node.setAttribute(BUTTON_INDEX, index);
-        if (buttons.length === 2) node.style.width = '50%';
-        if (button.onClick) buttonHandlers[index] = button.onClick;
-        wrapper.appendChild(node);
-    });
-    return wrapper;
-}
-
-
-function processOptions(options) {
-    var type = getType(options), buttons;
-    
-    if (type === 'function') {
-        return [{
-            text: '确定', 
-            onClick: options
-        }];
+    else if (messageType === 'function') {
+      buttons = message
+      message = title
+      title = undefined
     }
 
-    if (type === 'object') {
-        return [options];
+    if (!title) {
+      title = '提示'
     }
 
-    if (type === 'array') {
-        return options;
+    this.$el.appendChild(renderTitle(title))
+    this.$el.appendChild(renderContent(message))
+    this.$el.appendChild(renderButtons(buttons, this.handlers))
+
+    this.show()
+  }
+}
+
+const alertTasks = []
+let instance = null
+
+const destroy = Alert.prototype.destroy
+  Alert.prototype.destroy = function() {
+  destroy.call(this)
+  instance = null
+  exec()
+}
+
+function exec () {
+  setTimeout(() => {
+    if (!instance && alertTasks.length > 0) {
+      let args = alertTasks.shift()
+      instance = new Alert(container)
+      instance.render.apply(instance, args)
     }
-
-    return [{text: '确定'}];
+  }, 20)
 }
 
-
-function show() {
-    alertContainer.style.display = 'block';
-    $container.showWithMask();
-    scaleEnter(alertElement);
+/**
+ * example:
+ *   alert(
+ *     '提示',
+ *     '该手机号已经被注册',
+ *     [
+ *       { text: '取消', onClick: () => {} },
+ *       { text: '确认' }
+ *     ]
+ *   )
+ */
+export function alert(title, message, buttons) {
+  alertTasks.push(arguments)
+  exec()
 }
-
-
-function hide() {
-    $container.hideWithMask();
-    scaleLeave(alertElement, () => {
-        alertContainer.style.display = 'none';
-        alertElement.innerHTML = '';
-        buttonHandlers = [];
-    });
-}
-
-
-export default function(title, content, buttons) {
-    let titleNode = renderTitle(title);
-    let contentNode = renderContent(content);
-    let buttonsNode = renderButtons(buttons || content);
-    let fragment = document.createDocumentFragment();
-    if (titleNode) fragment.appendChild(titleNode);
-    if (contentNode) fragment.appendChild(contentNode);
-    if (buttonsNode) fragment.appendChild(buttonsNode);
-    alertElement.appendChild(fragment);
-    show();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

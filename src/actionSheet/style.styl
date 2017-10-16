@@ -1,0 +1,53 @@
+@import '../public.styl';
+
+.{$namespace}-actionsheet {
+  position: absolute;
+  bottom: 0;
+  z-index: $zIndexActionSheet;
+  width: 100%;
+  -webkit-transition: -webkit-transform $duration, transform $duration;
+  transition: -webkit-transform $duration, transform $duration;
+}
+
+.{$namespace}-actionsheet-title {
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.5;
+  color: #999;
+  background-color: #fff;
+}
+
+.{$namespace}-actionsheet-btns {
+  max-height: 330px;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.{$namespace}-actionsheet-btn {
+  height: 46px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 46px;
+  color: $primaryColor;
+  background-color: #fff;
+}
+
+.{$namespace}-actionsheet-disable {
+  color: $disableColor;
+}
+
+.{$namespace}-actionsheet-btn:active {
+  background-color: #e4e4e4;
+}
+
+.{$namespace}-actionsheet-cancel {
+  margin-top: 4px;
+}
+
+.{$namespace}-actionsheet-destructive {
+  color: $destructiveColor;
+}
+
+

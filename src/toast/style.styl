@@ -1,0 +1,24 @@
+@import '../public.styl';
+
+.{$namespace}-toast {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: $zIndexToast;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.{$namespace}-toast-main {
+  display: inline-block;
+  padding: 12px 15px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 14px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  -webkit-transition: opacity $duration, -webkit-transform $duration, transform $duration;
+  transition: opacity $duration, -webkit-transform $duration, transform $duration;
+}

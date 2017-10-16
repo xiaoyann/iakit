@@ -1,56 +1,49 @@
-import {NAMESPACE} from '../constant';
-import {fadeEnter, fadeLeave} from '../func';
-import './styles.scss';
+import * as utils from '../utils'
+import './style.styl'
 
-var showCount = 0;
-var showWithMaskCount = 0;
+let counts = 0
+let maskCounts = 0
 
+const container = document.createElement('div')
+utils.addClass(container, 'container')
 
-var container = document.createElement('div');
-container.className = NAMESPACE;
+export const mask = document.createElement('div')
+utils.addClass(mask, 'mask')
 
-export var mask = document.createElement('div');
-mask.className = `${NAMESPACE}__mask`;
+append(mask)
+utils.hideNode(container)
+utils.hideNode(mask)
+document.body.appendChild(container)
 
-container.appendChild(mask);
-document.body.appendChild(container);
-
-
-export function append(node) {
-    container.appendChild(node);
+export function append(child) {
+  container.appendChild(child)
 }
-
 
 export function show() {
-    showCount++;
-    container.style.display = 'block';
+  counts += 1
+  utils.showNode(container)
 }
-
 
 export function hide() {
-    if (--showCount <= 0) {
-        showCount = 0;
-        container.style.display = 'none';
-    }
+  counts -= 1
+  if (counts === 0) {
+    utils.hideNode(container)
+  }
 }
-
 
 export function showWithMask() {
-    showWithMaskCount++;
-    mask.style.display = 'block';
-    show();
-    fadeEnter(mask);
+  maskCounts += 1
+  utils.showNode(mask)
+  show()
+  utils.fadeEnter(mask)
 }
-
 
 export function hideWithMask() {
-    showCount--;
-    if (--showWithMaskCount === 0) {
-        fadeLeave(mask, () => {
-            mask.style.display = 'none';
-            if (showCount === 0) hide();
-        });
-    }
+  maskCounts -= 1
+  if (maskCounts === 0) {
+    utils.fadeLeave(mask, () => {
+      utils.hideNode(mask)
+      hide()
+    })
+  }
 }
-
-
