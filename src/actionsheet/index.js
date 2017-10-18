@@ -137,6 +137,6 @@ class ActionSheet {
 
 const instance = new ActionSheet(container)
 
-export function actionSheet(options) {
+export function actionsheet(options) {
   instance.render(options)
 }

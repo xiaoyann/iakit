@@ -9,7 +9,7 @@ function render(text, idx) {
 }
 
 fastclick(btn1, function() {
-  iakit.actionSheet({
+  iakit.actionsheet({
     options: [
       {
         text: '我再想想',

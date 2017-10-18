@@ -1,15 +1,19 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const projectName = require('./package.json').name
+const package = require('./package.json')
+
+const banner = `${package.name}.js v${package.version}
+(c) 2016-${(new Date()).getFullYear()} xiaoyann<0x0886@gmail.com>
+Released under the MIT License.`
 
 const config = {
   entry: './src/index.js',
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: projectName + '.js',
-    library: projectName,
+    filename: 'index.js',
+    library: package.name,
     libraryTarget: 'umd'
   },
 
@@ -22,7 +26,7 @@ const config = {
       {
         test: /\.(styl|css)$/,
         loader: ExtractTextPlugin.extract({
-          use: ['css-loader', 'postcss-loader', 'stylus-loader']
+          use: ['css-loader?minimize', 'postcss-loader', 'stylus-loader']
         })
       },
       {
@@ -33,7 +37,12 @@ const config = {
   },
 
   plugins: [
-    new ExtractTextPlugin(projectName + '.css'),
+    new webpack.DefinePlugin({
+      'global_version': JSON.stringify(package.version)
+    }),
+    new webpack.optimize.UglifyJsPlugin(),
+    new ExtractTextPlugin('style.css'),
+    new webpack.BannerPlugin(banner)
   ]
 }
 

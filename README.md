@@ -2,10 +2,6 @@
 
 无依赖 mini 组件库，只封装了 alert, toast, loading, actionSheet 等使用频率较高的组件。适用于类似 H5 活动页的简单移动端项目，不必为了使用这些组件而引入一个大而全的 UI 库和框架。
 
-```
-$ yarn add iakit
-```
-
 <table>
   <tbody>
     <tr>
@@ -29,11 +25,44 @@ $ yarn add iakit
   </tbody>
 </table>
 
+## usage
+
+使用 yarn/npm 安装，以模块化方式引入
+
+```
+$ yarn add iakit
+```
+
+```js
+import * as iakit from 'iakit'
+import 'iakit/dist/style.css'
+
+iakit.alert('提示', '测试测试测试测试')
+iakit.loading.show()
+iakit.actionsheet({/* 你的选项 */})
+iakit.toast.showTop('测试测试测试')
+```
+
+直接引入文件，比如使用 CDN
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/iakit@2.1.0/dist/style.css">
+<script src="https://unpkg.com/iakit@2.1.0/dist/index.js"></script>
+
+<script>
+  iakit.alert('提示', '测试测试测试测试')
+  iakit.loading.show()
+  iakit.actionsheet({/* 你的选项 */})
+  iakit.toast.showTop('测试测试测试')
+</script>
+```
+
+
 ### `iakit.alert(title, content, buttons)`
 
 * title: `string`，可选
 * content: `string`，必选
-* buttons: `array` | `function`，可选（button 结构：{ text: <String>, onClick: <Function> }）
+* buttons: `array` | `function`，可选（button 结构：{ text: String, onClick: Function }）
 
 ```js
 import * as iakit from 'iakit'
@@ -86,17 +115,17 @@ setTimeout(() => {
 }, 3000)
 ```
 
-## `iakit.actionSheet(options)`
+### `iakit.actionsheet(options)`
 
 #### options:
 * title: `string`，可选
-* options: `array` 可以操作的选项，必选（option 结构：{ text: <String>, disable: <Boolean>, onClick: <Function> }）
+* options: `array` 可以操作的选项，必选（option 结构：{ text: String, disable: Boolean, onClick: Function }）
 * destructiveIndex：`number` 危险选项的 index， 可选
 
 ```js
 import * as iakit from 'iakit'
 
-iakit.actionSheet({
+iakit.actionsheet({
   options: [
     {
       text: '我再想想',
@@ -123,3 +152,6 @@ iakit.actionSheet({
   }
 })
 ```
+
+## License
+MIT
