@@ -2,30 +2,32 @@
 
 无依赖 mini 组件库，只封装了 alert, toast, loading, actionSheet 等使用频率较高的组件。适用于类似 H5 活动页的简单移动端项目，不必为了使用这些组件而引入一个大而全的 UI 库和框架。
 
+```
+$ yarn add iakit
+```
+
 <table>
   <tbody>
     <tr>
       <td align="center" valign="top">
+        <p>iakit.alert</p>
         <img width="210" src="./docs/alert.jpg">
       </td>
       <td align="center" valign="top">
+        <p>iakit.loading</p>
         <img width="210" src="./docs/loading.jpg">
       </td>
-    </tr>
-    <tr>
       <td align="center" valign="top">
+        <p>iakit.actionSheet</p>
         <img width="210" src="./docs/actionsheet.jpg">
       </td>
       <td align="center" valign="top">
+        <p>iakit.toast</p>
         <img width="210" src="./docs/toast.jpg">
       </td>
     </tr>
   </tbody>
 </table>
-
-```
-$ yarn add iakit
-```
 
 ### `iakit.alert(title, content, buttons)`
 

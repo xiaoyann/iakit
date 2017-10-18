@@ -324,14 +324,14 @@ Object.keys(_toast).forEach(function (key) {
   });
 });
 
-var _actionSheet = __webpack_require__(11);
+var _actionsheet = __webpack_require__(11);
 
-Object.keys(_actionSheet).forEach(function (key) {
+Object.keys(_actionsheet).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _actionSheet[key];
+      return _actionsheet[key];
     }
   });
 });

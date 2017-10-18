@@ -1,4 +1,4 @@
 export * from './alert'
 export * from './loading'
 export * from './toast'
-export * from './actionSheet'
+export * from './actionsheet'
