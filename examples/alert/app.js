@@ -14,7 +14,7 @@ fastclick(btn2, function() {
     '指定回调函数',
     '点击确认按钮，执行指定的回调函数',
     () => {
-      alert('已执行')
+      iakit.alert('已执行')
     }
   )
 })
@@ -27,13 +27,13 @@ fastclick(btn3, function() {
       {
         text: '取消',
         onClick: () => {
-          alert('点击了取消按钮')
+          iakit.alert('点击了取消按钮')
         }
       },
       {
         text: '确定',
         onClick: () => {
-          alert('点击了确定按钮')
+          iakit.alert('点击了确定按钮')
         }
       }
     ]

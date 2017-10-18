@@ -1,37 +1,36 @@
 @import '../public.styl';
 
+@keyframes iakit-loading-spinner {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+$size = 38px
+
 .{$namespace}-loading {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: $zIndexLoading;
-  width: 37px;
-  height: 37px;
-  margin-left: auto;
-  margin-right: auto;
+  width: $size;
+  height: $size;
   padding: 15px;
   border-radius: 6px;
   background-color: rgba(0, 0, 0, .6);
-  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-@-webkit-keyframes loading-anim {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -444px 0;
-  }
+.{$namespace}-loading-spinner {
+  width: $size;
+  height: $size;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, .95);
+  border-left-color: transparent;
+  animation: iakit-loading-spinner .9s linear infinite;
 }
-
-.{$namespace}-loading-indicator {
-  width: 37px;
-  height: 37px;
-  background-size: auto 37px;
-  background-repeat: no-repeat;
-  background-image: url(./loading_white.png);
-  -webkit-animation: loading-anim 1s steps(12) infinite;
-  animation: loading-anim 1s steps(12) infinite;
-}
-

@@ -12,9 +12,9 @@ export const loading = {
     this.$container = container
     this.$el = document.createElement('div')
     utils.addClass(this.$el, 'loading')
-    let indicator = document.createElement('div')
-    utils.addClass(indicator, 'loading-indicator')
-    this.$el.appendChild(indicator)
+    let spinner = document.createElement('div')
+    utils.addClass(spinner, 'loading-spinner')
+    this.$el.appendChild(spinner)
     this.$container.append(this.$el)
     utils.hideNode(this.$el)
     this.inited = true
@@ -32,6 +32,4 @@ export const loading = {
 }
 
 loading.init()
-
-
 

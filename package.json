@@ -1,17 +1,18 @@
 {
   "name": "iakit",
   "version": "2.0.0",
-  "description": "",
+  "description": "无依赖 mini 组件库，只封装了 alert, toast, loading, actionSheet 等使用频率较高的组件。适用于类似 H5 活动页的简单移动端项目，不必为了使用这些组件而引入一个大而全的 UI 库和框架。",
   "main": "dist/iakit.js",
   "scripts": {
     "test": "jest",
     "start": "node examples/server.js",
-    "build": "node webpack.config.js",
+    "build": "NODE_ENV=production node webpack.config.js",
     "lint": "eslint src"
   },
   "author": "xiaoyann",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^7.1.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -25,6 +26,7 @@
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",
     "jest": "^21.2.1",
+    "postcss-loader": "^2.0.8",
     "style-loader": "^0.19.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

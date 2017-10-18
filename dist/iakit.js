@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,7 +91,7 @@ exports.removeClass = removeClass;
 exports.hideNode = hideNode;
 exports.showNode = showNode;
 
-var _config = __webpack_require__(3);
+var _config = __webpack_require__(4);
 
 var config = _interopRequireWildcard(_config);
 
@@ -215,8 +215,80 @@ var fastclick = exports.fastclick = function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.mask = undefined;
+exports.append = append;
+exports.show = show;
+exports.hide = hide;
+exports.showWithMask = showWithMask;
+exports.hideWithMask = hideWithMask;
 
-var _alert = __webpack_require__(2);
+var _utils = __webpack_require__(0);
+
+var utils = _interopRequireWildcard(_utils);
+
+__webpack_require__(5);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var counts = 0;
+var maskCounts = 0;
+
+var container = document.createElement('div');
+utils.addClass(container, 'container');
+
+var mask = exports.mask = document.createElement('div');
+utils.addClass(mask, 'mask');
+
+append(mask);
+utils.hideNode(container);
+utils.hideNode(mask);
+document.body.appendChild(container);
+
+function append(child) {
+  container.appendChild(child);
+}
+
+function show() {
+  counts += 1;
+  utils.showNode(container);
+}
+
+function hide() {
+  counts -= 1;
+  if (counts === 0) {
+    utils.hideNode(container);
+  }
+}
+
+function showWithMask() {
+  maskCounts += 1;
+  utils.showNode(mask);
+  show();
+  utils.fadeEnter(mask);
+}
+
+function hideWithMask() {
+  maskCounts -= 1;
+  if (maskCounts === 0) {
+    utils.fadeLeave(mask, function () {
+      utils.hideNode(mask);
+      hide();
+    });
+  }
+}
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _alert = __webpack_require__(3);
 
 Object.keys(_alert).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -228,8 +300,44 @@ Object.keys(_alert).forEach(function (key) {
   });
 });
 
+var _loading = __webpack_require__(7);
+
+Object.keys(_loading).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _loading[key];
+    }
+  });
+});
+
+var _toast = __webpack_require__(9);
+
+Object.keys(_toast).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _toast[key];
+    }
+  });
+});
+
+var _actionSheet = __webpack_require__(11);
+
+Object.keys(_actionSheet).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _actionSheet[key];
+    }
+  });
+});
+
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -247,7 +355,7 @@ var _utils = __webpack_require__(0);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _container = __webpack_require__(4);
+var _container = __webpack_require__(1);
 
 var container = _interopRequireWildcard(_container);
 
@@ -437,7 +545,7 @@ function alert(title, message, buttons) {
 }
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -453,7 +561,19 @@ var projectName = exports.projectName = 'iakit';
 var duration = exports.duration = 300;
 
 /***/ }),
-/* 4 */
+/* 5 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -462,74 +582,337 @@ var duration = exports.duration = 300;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.append = append;
-exports.show = show;
-exports.hide = hide;
-exports.showWithMask = showWithMask;
-exports.hideWithMask = hideWithMask;
+exports.loading = undefined;
 
 var _utils = __webpack_require__(0);
 
 var utils = _interopRequireWildcard(_utils);
 
-__webpack_require__(5);
+var _container = __webpack_require__(1);
+
+var container = _interopRequireWildcard(_container);
+
+__webpack_require__(8);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var counts = 0;
-var maskCounts = 0;
+var loading = exports.loading = {
+  $el: null,
+  $container: null,
+  inited: false,
 
-var container = document.createElement('div');
-utils.addClass(container, 'container');
-
-var mask = document.createElement('div');
-utils.addClass(mask, 'mask');
-
-append(mask);
-utils.hideNode(container);
-document.body.appendChild(container);
-
-function append(child) {
-  container.appendChild(child);
-}
-
-function show() {
-  counts += 1;
-  utils.showNode(container);
-}
-
-function hide() {
-  counts -= 1;
-  if (counts === 0) {
-    utils.hideNode(container);
+  init: function init() {
+    if (this.inited) return this;
+    this.$container = container;
+    this.$el = document.createElement('div');
+    utils.addClass(this.$el, 'loading');
+    var spinner = document.createElement('div');
+    utils.addClass(spinner, 'loading-spinner');
+    this.$el.appendChild(spinner);
+    this.$container.append(this.$el);
+    utils.hideNode(this.$el);
+    this.inited = true;
+  },
+  show: function show() {
+    this.$container.show();
+    utils.showNode(this.$el);
+  },
+  hide: function hide() {
+    this.$container.hide();
+    utils.hideNode(this.$el);
   }
-}
+};
 
-function showWithMask() {
-  maskCounts += 1;
-  utils.showNode(mask);
-  show();
-  utils.fadeEnter(mask);
-}
-
-function hideWithMask() {
-  maskCounts -= 1;
-  if (maskCounts === 0) {
-    utils.fadeLeave(mask, function () {
-      utils.hideNode(mask);
-      hide();
-    });
-  }
-}
+loading.init();
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 6 */
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toast = undefined;
+
+var _utils = __webpack_require__(0);
+
+var utils = _interopRequireWildcard(_utils);
+
+var _container = __webpack_require__(1);
+
+var container = _interopRequireWildcard(_container);
+
+__webpack_require__(10);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var toast = exports.toast = {
+  $el: null,
+  $container: null,
+  inited: false,
+
+  init: function init() {
+    if (this.inited) {
+      return;
+    }
+
+    var wrapper = document.createElement('div');
+    utils.addClass(wrapper, 'toast');
+
+    var toastMain = document.createElement('div');
+    utils.addClass(toastMain, 'toast-main');
+
+    wrapper.appendChild(toastMain);
+    container.append(wrapper);
+    utils.hideNode(wrapper);
+
+    this.$el = toastMain;
+    this.$wrapper = wrapper;
+    this.$container = container;
+    this.inited = true;
+  },
+  hide: function hide(callback) {
+    var _this = this;
+
+    utils.scaleLeave(this.$el, function () {
+      _this.$el.innerHTML = '';
+      utils.hideNode(_this.$wrapper);
+      _this.$container.hide();
+      callback && callback();
+    });
+  },
+  show: function show(text, time, callback, position) {
+    var _this2 = this;
+
+    this.$el.innerHTML = text;
+    this.$wrapper.style.top = position;
+    utils.showNode(this.$wrapper);
+
+    if (typeof time === 'function') {
+      callback = time;
+      time = undefined;
+    }
+
+    setTimeout(function () {
+      _this2.hide(callback);
+    }, time || 1500);
+
+    this.$container.show();
+    utils.scaleEnter(this.$el);
+  },
+  showTop: function showTop(text, time, callback) {
+    this.show(text, time, callback, '10%');
+  },
+  showCenter: function showCenter(text, time, callback) {
+    this.show(text, time, callback, '50%');
+  },
+  showBottom: function showBottom(text, time, callback) {
+    this.show(text, time, callback, '90%');
+  }
+};
+
+toast.init();
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.actionSheet = actionSheet;
+
+var _utils = __webpack_require__(0);
+
+var utils = _interopRequireWildcard(_utils);
+
+var _container = __webpack_require__(1);
+
+var container = _interopRequireWildcard(_container);
+
+__webpack_require__(12);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ATTR_BTNIDX_NAME = 'btn-index';
+var CANCEL_IDX = 'cancel';
+
+function renderTitle(text) {
+  var element = document.createElement('div');
+  element.innerHTML = text;
+  utils.addClass(element, 'actionsheet-title');
+  return element;
+}
+
+function renderButtons(buttons, destructiveIndex) {
+  var wrapper = document.createElement('div');
+  utils.addClass(wrapper, 'actionsheet-btns');
+
+  buttons.forEach(function (button, index) {
+    var node = document.createElement('div');
+    var classList = ['actionsheet-btn bd-1px'];
+
+    node.setAttribute(ATTR_BTNIDX_NAME, index);
+    node.innerHTML = typeof button === 'string' ? button : button.text;
+
+    if (button.disable === true) {
+      classList.push('actionsheet-disable');
+    } else if (destructiveIndex === index) {
+      classList.push('actionsheet-destructive');
+    }
+
+    utils.addClass(node, classList.join(' '));
+    wrapper.appendChild(node);
+  });
+
+  return wrapper;
+}
+
+function renderCancel() {
+  var element = document.createElement('div');
+  element.innerHTML = '取消';
+  element.setAttribute(ATTR_BTNIDX_NAME, CANCEL_IDX);
+  utils.addClass(element, 'actionsheet-btn actionsheet-cancel');
+  return element;
+}
+
+var ActionSheet = function () {
+  function ActionSheet(container) {
+    var _this = this;
+
+    _classCallCheck(this, ActionSheet);
+
+    var el = document.createElement('div');
+    utils.addClass(el, 'actionsheet');
+
+    utils.fastclick(el, function (event) {
+      var config = _this.config;
+      var node = event.srcElement;
+      var index = node.getAttribute(ATTR_BTNIDX_NAME);
+      if (index === null) {
+        return;
+      }
+      if (index === CANCEL_IDX) {
+        _this.hide(true);
+      } else {
+        var button = config.buttons[index];
+        if (button.disable === true) {
+          return;
+        }
+        if (typeof button.onClick === 'function') {
+          button.onClick(index, button.text);
+        } else if (typeof config.onClick === 'function') {
+          config.onClick(index, button.text);
+        }
+        _this.hide(false);
+      }
+    });
+
+    utils.fastclick(container.mask, function () {
+      return _this.hide(true);
+    });
+    container.append(el);
+
+    this.showed = false;
+    this.$el = el;
+    this.$container = container;
+  }
+
+  _createClass(ActionSheet, [{
+    key: 'hide',
+    value: function hide(isCancel) {
+      var _this2 = this;
+
+      if (isCancel && typeof this.config.onCancel === 'function') {
+        this.config.onCancel();
+      }
+      this.$container.hideWithMask();
+      utils.bottomLeave(this.$el, function () {
+        utils.hideNode(_this2.$el);
+        _this2.$el.innerHTML = '';
+        _this2.config = {};
+        _this2.showed = false;
+      });
+    }
+  }, {
+    key: 'show',
+    value: function show() {
+      utils.showNode(this.$el);
+      this.$container.showWithMask();
+      utils.bottomEnter(this.$el);
+    }
+  }, {
+    key: 'render',
+    value: function render(options) {
+      if (this.showed) {
+        return;
+      }
+
+      var config = {};
+
+      for (var key in options) {
+        config[key] = options[key];
+      }
+
+      config.buttons = config.options.map(function (item) {
+        if (typeof item === 'string') {
+          return { text: item, disable: false, onClick: undefined };
+        } else {
+          return item;
+        }
+      });
+
+      config.options = undefined;
+
+      this.config = config;
+
+      if (config.title) {
+        this.$el.appendChild(renderTitle(config.title));
+      }
+
+      if (config.buttons.length > 0) {
+        this.$el.appendChild(renderButtons(config.buttons, config.destructiveIndex));
+      }
+
+      this.$el.appendChild(renderCancel());
+      this.show();
+    }
+  }]);
+
+  return ActionSheet;
+}();
+
+var instance = new ActionSheet(container);
+
+function actionSheet(options) {
+  instance.render(options);
+}
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

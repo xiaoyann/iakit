@@ -13,6 +13,10 @@ fastclick(btn1, function() {
     options: [
       {
         text: '我再想想',
+        disable: false
+      },
+      {
+        text: '去它的(disabled)',
         disable: true
       },
       {
@@ -20,11 +24,9 @@ fastclick(btn1, function() {
         onClick: (i, text) => {
           render(text, i)
         }
-      },
-      '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
-      '我再想想', '我再想想', '我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想','我再想想', '我再想想',
+      }
     ],
-    destructiveIndex: 1,
+    destructiveIndex: 2,
     title: '确认要分手吗？',
     onClick(i, text) {
       render(text, i)

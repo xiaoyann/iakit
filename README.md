@@ -1,111 +1,123 @@
-# foundation
-Alert, Toast, Loading, ActionSheet 常用组件封装，没有任何依赖，只适用于移动端。
+# iakit
 
-<img width="210" src="./docs/thumb_IMG_0644_1024.jpg">
-<img width="210" src="./docs/thumb_IMG_0648_1024.jpg">
-<img width="210" src="./docs/thumb_IMG_0646_1024.jpg">
-<img width="210" src="./docs/thumb_IMG_0647_1024.jpg">
+无依赖 mini 组件库，只封装了 alert, toast, loading, actionSheet 等使用频率较高的组件。适用于类似 H5 活动页的简单移动端项目，不必为了使用这些组件而引入一个大而全的 UI 库和框架。
 
-## `Alert(title, content, buttons)`
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top">
+        <img width="210" src="./docs/alert.jpg">
+      </td>
+      <td align="center" valign="top">
+        <img width="210" src="./docs/loading.jpg">
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="top">
+        <img width="210" src="./docs/actionsheet.jpg">
+      </td>
+      <td align="center" valign="top">
+        <img width="210" src="./docs/toast.jpg">
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-* title: `string`，必选
-* content: `string`，可选
-* buttons: `array`，或者直接为一个`function`，可选
-
-```js
-import {Alert} from 'foundation';
+```
+$ yarn add iakit
 ```
 
-```js
-Alert('注册失败', '该邮箱已经被注册，如果有您有任何疑问请咨询客服。');
-```
+### `iakit.alert(title, content, buttons)`
+
+* title: `string`，可选
+* content: `string`，必选
+* buttons: `array` | `function`，可选（button 结构：{ text: <String>, onClick: <Function> }）
 
 ```js
-Alert('注册失败', () => {
-    // do something
-});
+import * as iakit from 'iakit'
+
+// demo 1.
+iakit.alert('注册失败', '该邮箱已经被注册，如果有您有任何疑问请咨询客服。')
+
+// demo 2.
+iakit.alert(
+  '注册失败',
+  '该邮箱已经被注册，如果有您有任何疑问请咨询客服。',
+  [
+    { text: '取消', onClick: () => {} },
+    { text: '确定', onClick: () => {} }
+  ]
+)
 ```
 
-```js
-Alert(
-    '注册失败', 
-    '该邮箱已经被注册，如果有您有任何疑问请咨询客服。', 
-    [
-        { text: '取消', onClick: () => {} },
-        { text: '确定', onClick: () => {} },
-    ]
-);
-```
-
-
-## `Toast(content, time, callback)`
+### `iakit.toast.showTop(content, time, callback)`
 
 * content: `string` 必选
 * time: `number` 显示多少毫秒，可选，默认 1500
-* callback: `function` 可选
-
-
-```js
-import {Toast} from 'foundation';
-```
+* callback: `function` toast 消失后的回调，可选
 
 ```js
-Toast.showTop('注册成功');
-```
+import * as iakit from 'iakit'
 
-```js
-Toast.showCenter('注册成功', 3000);
-```
+// demo 1.
+iakit.toast.showTop('注册成功')
 
-```js
-Toast.showBottom('注册成功', 3000, () => {
-    // do something
-});
+// demo 2.
+iakit.toast.showCenter('注册成功', 5000)
+
+// demo 3.
+iakit.toast.showBottom('注册成功', () => {
+  // do something you want
+})
 ```
 
 
-## `Loading()`
+### `iakit.loading.show()`
 
 ```js
-import {Loading} from 'foundation';
-```
+import * as iakit from 'iakit'
 
-```js
-Loading.show();
+iakit.loading.show()
 
 setTimeout(() => {
-    Loading.hide();
-}, 2000);
+  iakit.oading.hide()
+}, 3000)
 ```
 
-## `ActionSheet(options)`
+## `iakit.actionSheet(options)`
 
 #### options:
 * title: `string`，可选
-* options: `array`，必选
-* destructiveIndex：`number` 可选
+* options: `array` 可以操作的选项，必选（option 结构：{ text: <String>, disable: <Boolean>, onClick: <Function> }）
+* destructiveIndex：`number` 危险选项的 index， 可选
 
 ```js
-import {ActionSheet} from 'foundation';
-```
+import * as iakit from 'iakit'
 
-```js
-ActionSheet({
-    options: [
-        {
-            text: '我再想想',
-            onClick: () => {
-                // 是应该好好想想
-            }
-        },
-        {
-            text: '就这样吧',
-            onClick: () => {
-                // 借酒消愁去吧
-            }
-        }
-    ],
-    destructiveIndex: 1,
-    title: '确认要分手吗？'
-});
+iakit.actionSheet({
+  options: [
+    {
+      text: '我再想想',
+      disable: false,
+      onClick: (i, text) => {}
+    },
+    {
+      text: '去它的(disabled)',
+      disable: true
+    },
+    {
+      text: '就这样吧',
+      onClick: (i, text) => {
+      }
+    }
+  ],
+  destructiveIndex: 2,
+  title: '确认要分手吗？',
+  onClick(i, text) {
+    // 点击了没有指定 onClick 函数的选项时，执行这个函数
+  },
+  onCancel() {
+    // 取消了
+  }
+})
 ```

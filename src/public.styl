@@ -31,7 +31,6 @@ $destructiveColor = #FF3B30
 .{$namespace}-scale-enter,
 .{$namespace}-scale-leave {
   opacity: 0;
-  -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
 
@@ -42,7 +41,6 @@ $destructiveColor = #FF3B30
 
 .{$namespace}-bottom-enter,
 .{$namespace}-bottom-leave {
-  -webkit-transform: translateY(100%);
   transform: translateY(100%);
 }
 
@@ -68,9 +66,7 @@ $destructiveColor = #FF3B30
     width: 100%;
     height: 1px;
     border-top: 1px solid #CCC;
-    -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
-    -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
   }
 }

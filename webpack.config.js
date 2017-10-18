@@ -1,13 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const projectName = require('./package.json').name
 
 const config = {
   entry: './src/index.js',
 
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, 'dist'),
     filename: projectName + '.js',
     library: projectName,
     libraryTarget: 'umd'
@@ -22,12 +22,12 @@ const config = {
       {
         test: /\.(styl|css)$/,
         loader: ExtractTextPlugin.extract({
-          use: ['css-loader', 'stylus-loader']
+          use: ['css-loader', 'postcss-loader', 'stylus-loader']
         })
       },
       {
         test: /\.(?:jpg|gif|png)$/,
-        loader: 'url?limit=8000'
+        loader: 'url-loader?limit=8000'
       }
     ]
   },

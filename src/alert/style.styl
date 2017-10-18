@@ -4,7 +4,6 @@
   position: relative;
   z-index: $zIndexAlert;
   top: 50%;
-  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 
@@ -15,7 +14,6 @@
   padding-top: 15px;
   border-radius: 4px;
   background-color: #fff;
-  -webkit-transition: opacity $duration, -webkit-transform $duration, transform $duration;
   transition: opacity $duration, -webkit-transform $duration, transform $duration;
 }
 
@@ -44,7 +42,6 @@
   text-align: center;
   color: $primaryColor;
   background-color: transparent;
-  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -66,7 +63,6 @@
     border-left: 1px solid #ccc;
     position: absolute;
     left: 50%;
-    -webkit-transform: scaleX(0.5) translateX(-50%);
     transform: scaleX(0.5) translateX(-50%);
   }
 }

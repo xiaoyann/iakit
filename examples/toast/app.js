@@ -12,7 +12,7 @@ fastclick(btn1, function() {
 })
 
 fastclick(btn2, function() {
-  iakit.toast.showCenter('页面中间显示，文案很长长长长长长长长长长长长长长长长长长长长长长长长长')
+  iakit.toast.showCenter('页面中间显示')
 })
 
 fastclick(btn3, function() {
