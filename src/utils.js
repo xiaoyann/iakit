@@ -28,7 +28,7 @@ export function removeClass(node, cls) {
     cls.split(/\s+/).forEach((name) => {
       name = classPrefix(name)
       let pattern = new RegExp('(^|\\s+)' + name + '(\\s+|$)', 'g')
-      className = className.replace(pattern , ' ')
+      className = className.replace(pattern, ' ')
     })
     node.className = className.trim()
   }

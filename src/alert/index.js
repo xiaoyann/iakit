@@ -2,10 +2,8 @@ import * as utils from '../utils'
 import * as container from '../container'
 import './style.styl'
 
-
 // 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
 const ATTR_BTNIDX_NAME = 'btn-idx'
-
 
 function renderTitle (text) {
   let node = document.createElement('h3')
@@ -64,7 +62,6 @@ function processOptions (options) {
   }
   return [{ text: '确定' }]
 }
-
 
 class Alert {
   constructor(container) {
@@ -137,7 +134,7 @@ const alertTasks = []
 let instance = null
 
 const destroy = Alert.prototype.destroy
-  Alert.prototype.destroy = function() {
+Alert.prototype.destroy = function() {
   destroy.call(this)
   instance = null
   exec()
