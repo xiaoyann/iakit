@@ -2,6 +2,10 @@ import * as utils from '../utils'
 import * as container from '../container'
 import './style.styl'
 
+const config = {
+  zIndex: 1001,
+  btnText: '确定'
+}
 // 按钮被点击时需要执行的函数，通过数组的索引与按钮的ID关联
 const ATTR_BTNIDX_NAME = 'btn-idx'
 
@@ -50,17 +54,14 @@ function processOptions (options) {
   const type = utils.getType(options)
   if (type === 'function') {
     return [{
-      text: '确定',
+      text: config.btnText,
       onClick: options
     }]
-  }
-  if (type === 'object') {
-    return [options]
   }
   if (type === 'array') {
     return options
   }
-  return [{ text: '确定' }]
+  return [{ text: config.btnText }]
 }
 
 class Alert {
@@ -71,7 +72,7 @@ class Alert {
     this.$wrapper = document.createElement('div')
     this.$el = document.createElement('div')
     this.$wrapper.appendChild(this.$el)
-
+    this.$wrapper.style.zIndex = config.zIndex
     utils.addClass(this.$wrapper, 'alert')
     utils.addClass(this.$el, 'alert-main')
 
@@ -108,11 +109,13 @@ class Alert {
   render(title, message, buttons) {
     let messageType = utils.getType(message)
 
+    // alert('message')
     if (messageType === 'undefined') {
       message = title
       title = undefined
     }
-    else if (messageType === 'function') {
+    // alert('message', () => {}) or alert('message', [])
+    else if (messageType === 'function' || messageType === 'array') {
       buttons = message
       message = title
       title = undefined
@@ -164,4 +167,12 @@ function exec () {
 export function alert(title, message, buttons) {
   alertTasks.push(arguments)
   exec()
+}
+
+alert.config = function(options) {
+  Object.keys(config).forEach((key) => {
+    if (typeof options[key] !== 'undefined') {
+      config[key] = options[key]
+    }
+  })
 }
