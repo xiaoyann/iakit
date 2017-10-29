@@ -81,6 +81,18 @@ iakit.alert(
 )
 ```
 
+##### 自定义选项
+
+* `z-index`：在页面有其他元素的使用了定位并且层级比较高时可以使用这个参数调整 alert 的层级
+* `btnText`: 默认按钮的文案是 “确定”，可以通过这个参数修改
+
+```js
+iakit.alert.config({
+  zIndex: 9999, // alert 的 z-index
+  btnText: 'ok' // 默认按钮的文案
+})
+```
+
 ### `iakit.toast.showTop(content, time, callback)`
 
 * content: `string` 必选
