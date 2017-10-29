@@ -6,7 +6,12 @@ let btn2 = document.getElementById('btn2')
 let btn3 = document.getElementById('btn3')
 
 fastclick(btn1, function() {
-  iakit.alert('该手机号已经被注册过了')
+  // 修改默认按钮文案
+  iakit.alert.config({btnText: 'ok'})
+  iakit.alert('该手机号已经被注册过了', () => {
+    // 复原更改
+    iakit.alert.config({btnText: '确定'})
+  })
 })
 
 fastclick(btn2, function() {
