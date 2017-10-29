@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const Server = require('webpack-dev-server')
+const package = require('../package.json')
 
 function parseIP() {
   var os = require('os')
@@ -58,7 +59,12 @@ const config = {
         loader: 'url-loader?limit=8000'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'global_version': JSON.stringify(package.version)
+    })
+  ]
 }
 
 new Server(webpack(config), {
