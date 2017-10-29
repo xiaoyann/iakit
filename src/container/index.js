@@ -7,13 +7,28 @@ let maskCounts = 0
 const container = document.createElement('div')
 utils.addClass(container, 'container')
 
-export const mask = document.createElement('div')
-utils.addClass(mask, 'mask')
+const maskElem = document.createElement('div')
+utils.addClass(maskElem, 'mask')
 
-append(mask)
+append(maskElem)
 utils.hideNode(container)
-utils.hideNode(mask)
+utils.hideNode(maskElem)
 document.body.appendChild(container)
+
+export const mask = {
+  el: maskElem,
+  callbacks: [],
+  onclick(fn) {
+    this.callbacks.push(fn)
+  },
+  offclick(fn) {
+    this.callbacks = this.callbacks.filter((item) => item !== fn)
+  }
+}
+
+utils.fastclick(mask.el, (events) => {
+  mask.callbacks.forEach((fn) => fn(events))
+})
 
 export function append(child) {
   container.appendChild(child)
@@ -33,16 +48,16 @@ export function hide() {
 
 export function showWithMask() {
   maskCounts += 1
-  utils.showNode(mask)
+  utils.showNode(maskElem)
   show()
-  utils.fadeEnter(mask)
+  utils.fadeEnter(maskElem)
 }
 
 export function hideWithMask() {
   maskCounts -= 1
   if (maskCounts === 0) {
-    utils.fadeLeave(mask, () => {
-      utils.hideNode(mask)
+    utils.fadeLeave(maskElem, () => {
+      utils.hideNode(maskElem)
       hide()
     })
   }

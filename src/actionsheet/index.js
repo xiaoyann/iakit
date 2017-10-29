@@ -57,7 +57,7 @@ class ActionSheet {
         return
       }
       if (index === CANCEL_IDX) {
-        this.hide(true)
+        this.cancel()
       } else {
         let button = config.buttons[index]
         if (button.disable === true) {
@@ -72,12 +72,12 @@ class ActionSheet {
       }
     })
 
-    utils.fastclick(container.mask, () => this.hide(true))
     container.append(el)
 
     this.showed = false
     this.$el = el
     this.$container = container
+    this.cancel = this.cancel.bind(this)
   }
 
   hide (isCancel) {
@@ -90,6 +90,7 @@ class ActionSheet {
       this.$el.innerHTML = ''
       this.config = {}
       this.showed = false
+      this.$container.mask.offclick(this.cancel)
     })
   }
 
@@ -97,6 +98,11 @@ class ActionSheet {
     utils.showNode(this.$el)
     this.$container.showWithMask()
     utils.bottomEnter(this.$el)
+    this.$container.mask.onclick(this.cancel)
+  }
+
+  cancel() {
+    this.hide(true)
   }
 
   render(options) {
