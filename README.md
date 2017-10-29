@@ -25,7 +25,7 @@
   </tbody>
 </table>
 
-## usage
+## Usage
 
 使用 yarn/npm 安装，以模块化方式引入
 
@@ -43,7 +43,7 @@ iakit.actionsheet({/* 你的选项 */})
 iakit.toast.showTop('测试测试测试')
 ```
 
-直接引入文件，比如使用 CDN
+也可以直接引入文件，比如使用 CDN
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/iakit@2.1.0/dist/style.css">
@@ -57,6 +57,7 @@ iakit.toast.showTop('测试测试测试')
 </script>
 ```
 
+## API
 
 ### `iakit.alert(title, content, buttons)`
 
